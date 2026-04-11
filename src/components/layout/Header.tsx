@@ -79,7 +79,7 @@ export default function Header() {
       </div>
 
       {isMenuOpen && (
-        <nav className="md:hidden bg-bg/95 backdrop-blur-md px-6 py-6 flex flex-col gap-5 border-t border-border">
+        <nav className="md:hidden bg-bg px-6 py-6 flex flex-col gap-5 border-t border-border">
           {navLinks.map((link) => (
             <Link
               href={link.href}

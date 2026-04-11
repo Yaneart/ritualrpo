@@ -1,15 +1,23 @@
-import Image from "next/image";
-
 export default function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <Image
-        src="/images/hero.jpg"
-        alt="Ритуальные услуги"
-        fill
-        priority
-        className="absolute inset-0 object-cover"
-      />
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+
+      {/* <Image
+          src="/images/hero.jpg"
+          alt="Ритуальные услуги"
+          fill
+          priority
+          className="absolute inset-0 object-cover"
+        /> */}
 
       <div className="absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/40 to-bg" />
 
