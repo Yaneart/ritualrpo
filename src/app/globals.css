@@ -4,16 +4,14 @@
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-heading: var(--font-playfair), Georgia, serif;
 
-  --color-primary: #1b4332;
-  --color-primary-light: #2d6a4f;
-  --color-primary-dark: #0f2a1d;
+  --color-bg: #0f1210;
+  --color-bg-alt: #161b18;
 
-  --color-accent: #b8860b;
-  --color-accent-light: #d4a843;
+  --color-text: #f5f5f0;
+  --color-text-muted: #8a9188;
 
-  --color-text: #1a1a1a;
-  --color-text-light: #6b7280;
-  --color-background: #ffffff;
-  --color-background-alt: #f9fafb;
-  --color-border: #e5e7eb;
+  --color-accent: #c9a84c;
+  --color-accent-hover: #dfc070;
+
+  --color-border: #2d4a3e;
 }

@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen flex flex-col font-sans antialiased">
+      <body className="min-h-screen flex flex-col font-sans antialiased bg-bg text-text">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
