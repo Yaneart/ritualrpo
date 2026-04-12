@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -14,10 +15,21 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
+  const [isOnHero, setIsOnHero] = useState(true);
+
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      const hero = document.getElementById("hero");
+      if (hero) {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        setIsOnHero(heroBottom > 80);
+      } else {
+        setIsOnHero(false);
+      }
 
       const footer = document.querySelector("footer");
       if (footer) {
@@ -26,9 +38,12 @@ export default function Header() {
       }
     };
 
+    requestAnimationFrame(() => {
+      handleScroll();
+    });
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   const headerBg = isOverFooter
     ? "bg-bg-dark"
@@ -36,7 +51,7 @@ export default function Header() {
       ? "bg-bg/95 backdrop-blur-md shadow-sm"
       : "bg-transparent";
 
-  const needsLight = isOverFooter || !isScrolled;
+  const needsLight = isOverFooter || (!isScrolled && isOnHero);
   const textColor = needsLight ? "text-white" : "text-text";
   const mutedColor = needsLight ? "text-white/70" : "text-text-muted";
   const accentColor = needsLight ? "text-white" : "text-accent";

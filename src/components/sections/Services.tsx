@@ -11,7 +11,7 @@ const services = [
     title: "Кремация",
     description:
       "Организация кремации с соблюдением всех традиций и пожеланий семьи.",
-    image: "/images/services/cremation2.jpg",
+    image: "/images/services/cremation.jpg",
   },
   {
     title: "Ритуальные товары",
@@ -23,7 +23,7 @@ const services = [
     title: "Памятники и благоустройство",
     description:
       "Изготовление памятников, оград, благоустройство и уход за захоронениями.",
-    image: "/images/services/monuments2.jpg",
+    image: "/images/services/monuments.jpg",
   },
 ];
 
@@ -48,6 +48,8 @@ export default function Services() {
                 src={service.image}
                 alt={service.title}
                 fill
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
