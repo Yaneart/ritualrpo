@@ -1,31 +1,6 @@
+import { services } from "@/data/services";
 import Image from "next/image";
-
-const services = [
-  {
-    title: "Организация похорон",
-    description:
-      "Полный цикл организации — от оформления документов до проведения церемонии прощания.",
-    image: "/images/services/funeral.jpg",
-  },
-  {
-    title: "Кремация",
-    description:
-      "Организация кремации с соблюдением всех традиций и пожеланий семьи.",
-    image: "/images/services/cremation.jpg",
-  },
-  {
-    title: "Ритуальные товары",
-    description:
-      "Гробы, венки, цветы, траурные ленты и другие ритуальные принадлежности.",
-    image: "/images/services/products.jpg",
-  },
-  {
-    title: "Памятники и благоустройство",
-    description:
-      "Изготовление памятников, оград, благоустройство и уход за захоронениями.",
-    image: "/images/services/monuments.jpg",
-  },
-];
+import Link from "next/link";
 
 export default function Services() {
   return (
@@ -40,7 +15,8 @@ export default function Services() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service) => (
-            <div
+            <Link
+              href={`/uslugi/${service.slug}`}
               key={service.title}
               className="group relative h-80 md:h-96 rounded-2xl overflow-hidden cursor-pointer"
             >
@@ -63,7 +39,7 @@ export default function Services() {
                   {service.description}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
