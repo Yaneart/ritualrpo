@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Services() {
   return (
-    <section className="bg-bg-alt py-24 md:py-32">
+    <section className="bg-bg-alt py-32 md:py-44">
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
           [ Наши услуги ]

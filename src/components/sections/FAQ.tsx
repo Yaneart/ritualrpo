@@ -38,9 +38,9 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-bg py-24 md:py-32">
+    <section className="bg-bg-dark text-white py-32 md:py-44">
       <div className="max-w-3xl mx-auto px-6">
-        <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
+        <p className="text-sm uppercase tracking-widest text-white/40 mb-4">
           [ Вопросы ]
         </p>
         <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-16">
@@ -49,7 +49,7 @@ export default function FAQ() {
 
         <div className="flex flex-col">
           {faqs.map((faq, index) => (
-            <div key={index} className="border-b border-border">
+            <div key={index} className="border-b border-white/10">
               <button
                 onClick={() => toggle(index)}
                 className="w-full flex items-center justify-between py-6 text-left cursor-pointer"
@@ -59,7 +59,7 @@ export default function FAQ() {
                 </span>
 
                 <span
-                  className={`text-accent text-2xl transition-transform duration-300 ${openIndex === index ? "rotate-45" : ""}`}
+                  className={`text-white/40 text-2xl transition-transform duration-300 ${openIndex === index ? "rotate-45" : ""}`}
                 >
                   +
                 </span>
@@ -68,7 +68,7 @@ export default function FAQ() {
               <div
                 className={`overflow-hidden transition-all duration-500 ${openIndex === index ? "max-h-96 pb-6" : "max-h-0"}`}
               >
-                <p className="text-text-muted leading-relaxed">{faq.answer}</p>
+                <p className="text-white/60 leading-relaxed">{faq.answer}</p>
               </div>
             </div>
           ))}
