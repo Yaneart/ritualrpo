@@ -51,13 +51,13 @@ export default function Services() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-bg-dark/50 to-transparent" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                 <h3 className="font-heading text-2xl md:text-3xl font-bold mb-2">
                   {service.title}
                 </h3>
-                <p className="text-text-muted text-sm md:text-base leading-relaxed">
+                <p className="text-white/70 text-sm md:text-base leading-relaxed">
                   {service.description}
                 </p>
               </div>

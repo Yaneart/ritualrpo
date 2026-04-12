@@ -24,7 +24,7 @@ export default function CTA() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="tel:+78126605151"
-            className="bg-accent hover:bg-accent-hover text-bg font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300"
+            className="bg-accent hover:bg-accent-hover text-white font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300"
           >
             Позвонить сейчас
           </a>

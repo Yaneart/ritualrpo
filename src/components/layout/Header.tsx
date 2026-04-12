@@ -13,24 +13,45 @@ const navLinks = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isOverFooter, setIsOverFooter] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      const footer = document.querySelector("footer");
+      if (footer) {
+        const footerTop = footer.getBoundingClientRect().top;
+        setIsOverFooter(footerTop <= 80);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const headerBg = isOverFooter
+    ? "bg-bg-dark"
+    : isScrolled
+      ? "bg-bg/95 backdrop-blur-md shadow-sm"
+      : "bg-transparent";
+
+  const needsLight = isOverFooter || !isScrolled;
+  const textColor = needsLight ? "text-white" : "text-text";
+  const mutedColor = needsLight ? "text-white/70" : "text-text-muted";
+  const accentColor = needsLight ? "text-white" : "text-accent";
+  const borderColor = needsLight ? "border-white/50" : "border-accent";
+  const burgerBg = needsLight ? "bg-white" : "bg-text";
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "bg-[#0a0d0b]" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerBg}`}
     >
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-heading font-bold text-text">
+        <Link
+          href="/"
+          className={`text-2xl font-heading font-bold transition-colors duration-500 ${textColor}`}
+        >
           RitualRPO
         </Link>
 
@@ -39,7 +60,7 @@ export default function Header() {
             <Link
               href={link.href}
               key={link.href}
-              className="text-sm uppercase tracking-widest text-text-muted hover:text-accent transition-colors duration-300"
+              className={`text-sm uppercase tracking-widest transition-colors duration-500 ${mutedColor} ${needsLight ? "hover:text-white" : "hover:text-accent"}`}
             >
               {link.label}
             </Link>
@@ -48,7 +69,7 @@ export default function Header() {
 
         <a
           href="tel:+78126605151"
-          className="hidden md:flex items-center gap-2 border border-accent text-accent hover:bg-accent hover:text-bg px-5 py-2.5 rounded-full text-sm uppercase tracking-wider transition-all duration-300"
+          className={`hidden md:flex items-center gap-2 border ${borderColor} ${accentColor} hover:bg-accent hover:text-white px-5 py-2.5 rounded-full text-sm uppercase tracking-wider transition-all duration-500`}
         >
           +7 (812) 660-51-51
         </a>
@@ -59,17 +80,17 @@ export default function Header() {
           aria-label="Открыть меню"
         >
           <span
-            className={`block w-6 h-0.5 bg-text transition-transform duration-300 ${
+            className={`block w-6 h-0.5 ${burgerBg} transition-all duration-300 ${
               isMenuOpen ? "rotate-45 translate-y-2" : ""
             }`}
           />
           <span
-            className={`block w-6 h-0.5 bg-text transition-opacity duration-300 ${
+            className={`block w-6 h-0.5 ${burgerBg} transition-all duration-300 ${
               isMenuOpen ? "opacity-0" : ""
             }`}
           />
           <span
-            className={`block w-6 h-0.5 bg-text transition-transform duration-300 ${
+            className={`block w-6 h-0.5 ${burgerBg} transition-all duration-300 ${
               isMenuOpen ? "-rotate-45 -translate-y-2" : ""
             }`}
           />
@@ -77,20 +98,22 @@ export default function Header() {
       </div>
 
       {isMenuOpen && (
-        <nav className="md:hidden bg-bg px-6 py-6 flex flex-col gap-5 border-t border-border">
+        <nav
+          className={`md:hidden px-6 py-6 flex flex-col gap-5 border-t ${isOverFooter ? "bg-bg-dark border-white/10" : "bg-bg border-border"}`}
+        >
           {navLinks.map((link) => (
             <Link
               href={link.href}
               key={link.href}
               onClick={() => setIsMenuOpen(false)}
-              className="text-lg text-text-muted hover:text-accent transition-colors duration-300"
+              className={`text-lg transition-colors duration-300 ${mutedColor}`}
             >
               {link.label}
             </Link>
           ))}
           <a
             href="tel:+78126605151"
-            className="border border-accent text-accent hover:bg-accent hover:text-bg px-5 py-2.5 rounded-full text-center text-sm uppercase tracking-wider transition-all duration-300"
+            className={`border ${borderColor} ${accentColor} hover:bg-accent hover:text-white px-5 py-2.5 rounded-full text-center text-sm uppercase tracking-wider transition-all duration-300`}
           >
             +7 (812) 660-51-51
           </a>

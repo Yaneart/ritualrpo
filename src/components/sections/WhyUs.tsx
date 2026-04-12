@@ -39,7 +39,7 @@ export default function WhyUs() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
           {advantages.map((item) => (
             <div key={item.number} className="flex gap-6">
-              <span className="text-5xl md:text-6xl font-heading font-bold text-accent/20">
+              <span className="text-5xl md:text-6xl font-heading font-bold text-border">
                 {item.number}
               </span>
 
