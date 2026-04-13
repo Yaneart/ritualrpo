@@ -85,28 +85,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      <section className="bg-bg-alt py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-            [ Документы ]
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl font-bold mb-16">
-            Лицензии и <em className="italic font-normal">сертификаты</em>
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates.map((doc) => (
-              <div
-                key={doc.title}
-                className="border border-border rounded-2xl p-8 flex items-center justify-center h-48"
-              >
-                <p className="text-text-muted text-center">{doc.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 }
