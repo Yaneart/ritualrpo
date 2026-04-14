@@ -46,16 +46,16 @@ export default function CatalogFilter() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {filteredProducts.map((products) => (
+            {filteredProducts.map((product) => (
               <Link
-                href={`/katalog/${products.slug}`}
-                key={products.id}
+                href={`/katalog/${product.slug}`}
+                key={product.id}
                 className="group"
               >
                 <div className="relative h-64 rounded-2xl overflow-hidden mb-4">
                   <Image
-                    src={products.image}
-                    alt={products.title}
+                    src={product.image}
+                    alt={product.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -63,15 +63,15 @@ export default function CatalogFilter() {
                 </div>
 
                 <h3 className="font-semibold text-lg mb-1 group-hover:text-accent transition-colors duration-300">
-                  {products.title}
+                  {product.title}
                 </h3>
 
                 <p className="text-text-muted text-sm mb-2 line-clamp-2">
-                  {products.description}
+                  {product.description}
                 </p>
 
                 <p className="font-heading text-xl font-bold">
-                  {products.price.toLocaleString("ru-RU")} ₽
+                  {product.price.toLocaleString("ru-RU")} ₽
                 </p>
               </Link>
             ))}

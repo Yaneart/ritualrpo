@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
+import FloatingMessenger from "@/components/ui/FloatingMessenger";
+import FloatingMaxMessenger from "@/components/ui/FloatingMaxMessenger";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -69,6 +72,9 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ScrollToTop />
+        <FloatingMessenger />
+        <FloatingMaxMessenger />
       </body>
     </html>
   );

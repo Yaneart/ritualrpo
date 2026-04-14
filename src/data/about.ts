@@ -39,17 +39,17 @@ export const team: TeamMember[] = [
   },
 ];
 
-export const certificates: Certificate[] = [
-  {
-    title: "Свидетельство о регистрации",
-    image: "/images/about/cert-1.jpg",
-  },
-  {
-    title: "Лицензия на ритуальные услуги",
-    image: "/images/about/cert-2.jpg",
-  },
-  {
-    title: "Сертификат качества",
-    image: "/images/about/cert-3.jpg",
-  },
-];
+// export const certificates: Certificate[] = [
+//   {
+//     title: "Свидетельство о регистрации",
+//     image: "/images/about/cert-1.jpg",
+//   },
+//   {
+//     title: "Лицензия на ритуальные услуги",
+//     image: "/images/about/cert-2.jpg",
+//   },
+//   {
+//     title: "Сертификат качества",
+//     image: "/images/about/cert-3.jpg",
+//   },
+// ];
