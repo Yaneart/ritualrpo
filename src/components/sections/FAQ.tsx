@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimateOnScroll } from "../ui/AnimateOnScroll";
 
 const faqs = [
   {
@@ -39,41 +40,43 @@ export default function FAQ() {
 
   return (
     <section className="bg-bg-dark text-white py-32 md:py-44">
-      <div className="max-w-3xl mx-auto px-6">
-        <p className="text-sm uppercase tracking-widest text-white/40 mb-4">
-          [ Вопросы ]
-        </p>
-        <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-16">
-          Частые <em className="italic font-normal">вопросы</em>
-        </h2>
+      <AnimateOnScroll>
+        <div className="max-w-3xl mx-auto px-6">
+          <p className="text-sm uppercase tracking-widest text-white/40 mb-4">
+            [ Вопросы ]
+          </p>
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-16">
+            Частые <em className="italic font-normal">вопросы</em>
+          </h2>
 
-        <div className="flex flex-col">
-          {faqs.map((faq, index) => (
-            <div key={index} className="border-b border-white/10">
-              <button
-                onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between py-6 text-left cursor-pointer"
-              >
-                <span className="text-lg md:text-xl font-semibold pr-8">
-                  {faq.question}
-                </span>
-
-                <span
-                  className={`text-white/40 text-2xl transition-transform duration-300 ${openIndex === index ? "rotate-45" : ""}`}
+          <div className="flex flex-col">
+            {faqs.map((faq, index) => (
+              <div key={index} className="border-b border-white/10">
+                <button
+                  onClick={() => toggle(index)}
+                  className="w-full flex items-center justify-between py-6 text-left cursor-pointer"
                 >
-                  +
-                </span>
-              </button>
+                  <span className="text-lg md:text-xl font-semibold pr-8">
+                    {faq.question}
+                  </span>
 
-              <div
-                className={`overflow-hidden transition-all duration-500 ${openIndex === index ? "max-h-96 pb-6" : "max-h-0"}`}
-              >
-                <p className="text-white/60 leading-relaxed">{faq.answer}</p>
+                  <span
+                    className={`text-white/40 text-2xl transition-transform duration-300 ${openIndex === index ? "rotate-45" : ""}`}
+                  >
+                    +
+                  </span>
+                </button>
+
+                <div
+                  className={`overflow-hidden transition-all duration-500 ${openIndex === index ? "max-h-96 pb-6" : "max-h-0"}`}
+                >
+                  <p className="text-white/60 leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </AnimateOnScroll>
     </section>
   );
 }
