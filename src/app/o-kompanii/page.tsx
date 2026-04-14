@@ -1,5 +1,12 @@
 import Image from "next/image";
-import { stats, team, certificates } from "@/data/about";
+import { stats, team } from "@/data/about";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "О компании",
+  description:
+    "Более 10 лет опыта в сфере ритуальных услуг Санкт-Петербурга. Профессиональная и деликатная помощь круглосуточно.",
+};
 
 export default function AboutPage() {
   return (

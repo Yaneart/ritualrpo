@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { services } from "@/data/services";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Услуги",
+  description: "Полный спектр ритуальных услуг: организация похорон, кремация, транспортировка, оформление документов. Работаем круглосуточно.",
+};
 
 export default function UslugiPage() {
   return (

@@ -1,7 +1,22 @@
 import { services } from "@/data/services";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
+  if (!service) return {};
+  return {
+    title: service.title,
+    description: service.description,
+  };
+}
 
 export function generateStaticParams() {
   return services.map((service) => ({

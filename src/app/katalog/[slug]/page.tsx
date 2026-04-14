@@ -1,7 +1,22 @@
 import { products } from "@/data/products";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = products.find((p) => p.slug === slug);
+  if (!product) return {};
+  return {
+    title: product.title,
+    description: product.description,
+  };
+}
 
 export function generateStaticParams() {
   return products.map((product) => ({
