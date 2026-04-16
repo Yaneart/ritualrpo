@@ -48,11 +48,11 @@ export default function Header() {
 
   const headerBg = isOverFooter
     ? "bg-bg-dark"
-    : isScrolled
+    : isScrolled || isMenuOpen
       ? "bg-bg/95 backdrop-blur-md shadow-sm"
       : "bg-transparent";
 
-  const needsLight = isOverFooter || (!isScrolled && isOnHero);
+  const needsLight = isOverFooter || (!isScrolled && isOnHero && !isMenuOpen);
   const textColor = needsLight ? "text-white" : "text-text";
   const mutedColor = needsLight ? "text-white/70" : "text-text-muted";
   const accentColor = needsLight ? "text-white" : "text-accent";

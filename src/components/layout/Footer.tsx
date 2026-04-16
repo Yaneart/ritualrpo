@@ -66,7 +66,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto w-full px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div className="max-w-7xl mx-auto w-full px-6 pt-6 pb-20 md:pb-6 flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-bg/30 text-xs">
             &copy; 2026 RitualRPO. Все права защищены.
           </p>

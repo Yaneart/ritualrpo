@@ -8,16 +8,38 @@ export default function ContactForm() {
     phone: "",
     message: "",
   });
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (errors[e.target.name as keyof typeof errors]) {
+      setErrors({ ...errors, [e.target.name]: undefined });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors: { name?: string; phone?: string } = {};
+
+    if (!form.name.trim()) {
+      newErrors.name = "Введите ваше имя";
+    }
+
+    const phoneDigits = form.phone.replace(/\D/g, "");
+    if (!form.phone.trim()) {
+      newErrors.phone = "Введите номер телефона";
+    } else if (phoneDigits.length < 10) {
+      newErrors.phone = "Номер телефона слишком короткий";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     setIsSubmitted(true);
   };
 
@@ -114,8 +136,11 @@ export default function ContactForm() {
                       required
                       value={form.name}
                       onChange={handleChange}
-                      className="w-full bg-transparent border-b border-border py-3 text-lg outline-none focus:border-accent transition-colors duration-300"
+                      className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${errors.name ? "border-red-500" : "border-border focus:border-accent"}`}
                     />
+                    {errors.name && (
+                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                    )}
                   </div>
 
                   <div>
@@ -132,8 +157,11 @@ export default function ContactForm() {
                       required
                       value={form.phone}
                       onChange={handleChange}
-                      className="w-full bg-transparent border-b border-border py-3 text-lg outline-none focus:border-accent transition-colors duration-300"
+                      className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${errors.phone ? "border-red-500" : "border-border focus:border-accent"}`}
                     />
+                    {errors.phone && (
+                      <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                    )}
                   </div>
 
                   <div>

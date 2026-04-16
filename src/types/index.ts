@@ -1,0 +1,40 @@
+export interface Service {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  fullText: string;
+  image: string;
+  features: string[];
+  price: string | null;
+  order: number;
+}
+
+// Категория товаров
+export interface Category {
+  id: string;
+  slug: string;
+  name: string;
+  order: number;
+}
+
+// Товар
+export interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image: string;
+  categoryId: string;
+  category?: Category;
+}
+
+// Данные для создания заявки
+export interface CreateRequestData {
+  type: string;
+  name: string;
+  phone: string;
+  email?: string;
+  message?: string;
+}

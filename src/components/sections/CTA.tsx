@@ -32,7 +32,7 @@ export default function CTA() {
               Позвонить сейчас
             </a>
             <a
-              href="#"
+              href="/kontakty"
               className="border border-border hover:border-accent text-text-muted hover:text-accent px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-all duration-300"
             >
               Заказать обратный звонок
