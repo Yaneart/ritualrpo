@@ -1,4 +1,4 @@
-import { services } from "@/data/services";
+import { getServiceBySlug, getServices } from "@/lib";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,15 +10,21 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = services.find((s) => s.slug === slug);
-  if (!service) return {};
-  return {
-    title: service.title,
-    description: service.description,
-  };
+  let service;
+  try {
+    service = await getServiceBySlug(slug);
+    return {
+      title: service.title,
+      description: service.description,
+    };
+  } catch {
+    return {};
+  }
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const services = await getServices();
+
   return services.map((service) => ({
     slug: service.slug,
   }));
@@ -30,9 +36,10 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = services.find((s) => s.slug === slug);
-
-  if (!service) {
+  let service;
+  try {
+    service = await getServiceBySlug(slug);
+  } catch {
     notFound();
   }
   return (
@@ -71,7 +78,7 @@ export default async function ServicePage({
                 [ Об услуге ]
               </p>
               <p className="text-lg md:text-xl leading-relaxed text-text-muted">
-                {service.fullDescription}
+                {service.fullText}
               </p>
             </div>
 

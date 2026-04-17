@@ -1,8 +1,7 @@
-import { services } from "@/data/services";
-import { products } from "@/data/products";
+import { getProducts, getServices } from "@/lib";
 import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://ritualrpo.ru";
 
   const staticPages = [
@@ -16,6 +15,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
   }));
+
+  const [services, products] = await Promise.all([
+    getServices(),
+    getProducts(),
+  ]);
 
   const servicePages = services.map((service) => ({
     url: `${baseUrl}/uslugi/${service.slug}`,

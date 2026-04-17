@@ -1,14 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { services } from "@/data/services";
 import { Metadata } from "next";
+import { getServices } from "@/lib";
 
 export const metadata: Metadata = {
   title: "Услуги",
-  description: "Полный спектр ритуальных услуг: организация похорон, кремация, транспортировка, оформление документов. Работаем круглосуточно.",
+  description:
+    "Полный спектр ритуальных услуг: организация похорон, кремация, транспортировка, оформление документов. Работаем круглосуточно.",
 };
 
-export default function UslugiPage() {
+export default async function UslugiPage() {
+  const services = await getServices();
+
   return (
     <>
       <section className="pt-40 pb-20 bg-bg">
@@ -28,7 +31,7 @@ export default function UslugiPage() {
             {services.map((service) => (
               <Link
                 href={`/uslugi/${service.slug}`}
-                key={service.slug}
+                key={service.id}
                 className="group relative h-80 md:h-96 rounded-2xl overflow-hidden block"
               >
                 <Image

@@ -1,17 +1,25 @@
 "use client";
 
-import { categories, products } from "@/data/products";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Category, Product } from "@/types";
 
-export default function CatalogFilter() {
+interface CatalogFilterProps {
+  products: Product[];
+  categories: Category[];
+}
+
+export default function CatalogFilter({
+  products,
+  categories,
+}: CatalogFilterProps) {
   const [activateCategory, setActivateCategory] = useState("all");
 
   const filteredProducts =
     activateCategory === "all"
       ? products
-      : products.filter((q) => q.category === activateCategory);
+      : products.filter((q) => q.category?.slug === activateCategory);
 
   return (
     <>
@@ -29,9 +37,20 @@ export default function CatalogFilter() {
       <section className="bg-bg pb-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap gap-3 mb-16">
+            <button
+              onClick={() => setActivateCategory("all")}
+              className={`px-6 py-2.5 rounded-full text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer
+      ${
+        activateCategory === "all"
+          ? "bg-accent text-white"
+          : "border border-border text-text-muted hover:border-accent hover:text-accent"
+      }`}
+            >
+              Все
+            </button>
             {categories.map((category) => (
               <button
-                key={category.slug}
+                key={category.id}
                 onClick={() => setActivateCategory(category.slug)}
                 className={`px-6 py-2.5 rounded-full text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer
                   ${
@@ -40,7 +59,7 @@ export default function CatalogFilter() {
                       : "border border-border text-text-muted hover:border-accent hover:text-accent"
                   }`}
               >
-                {category.label}
+                {category.name}
               </button>
             ))}
           </div>
@@ -55,7 +74,7 @@ export default function CatalogFilter() {
                 <div className="relative h-64 rounded-2xl overflow-hidden mb-4">
                   <Image
                     src={product.image}
-                    alt={product.title}
+                    alt={product.name}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -63,7 +82,7 @@ export default function CatalogFilter() {
                 </div>
 
                 <h3 className="font-semibold text-lg mb-1 group-hover:text-accent transition-colors duration-300">
-                  {product.title}
+                  {product.name}
                 </h3>
 
                 <p className="text-text-muted text-sm mb-2 line-clamp-2">

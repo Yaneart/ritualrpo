@@ -1,4 +1,4 @@
-import { products } from "@/data/products";
+import { getProductBySlug, getProducts } from "@/lib";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,15 +10,19 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = products.find((p) => p.slug === slug);
-  if (!product) return {};
-  return {
-    title: product.title,
-    description: product.description,
-  };
+  try {
+    const product = await getProductBySlug(slug);
+    return {
+      title: product.name,
+      description: product.description ?? undefined,
+    };
+  } catch {
+    return {};
+  }
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const products = await getProducts();
   return products.map((product) => ({
     slug: product.slug,
   }));
@@ -30,9 +34,10 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = products.find((q) => q.slug === slug);
-
-  if (!product) {
+  let product;
+  try {
+    product = await getProductBySlug(slug);
+  } catch {
     notFound();
   }
 
@@ -51,7 +56,7 @@ export default async function ProductPage({
             <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
               <Image
                 src={product.image}
-                alt={product.title}
+                alt={product.name}
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -64,7 +69,7 @@ export default async function ProductPage({
                 [ Товар ]
               </p>
               <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-                {product.title}
+                {product.name}
               </h1>
               <p className="text-text-muted text-lg leading-relaxed mb-8">
                 {product.description}

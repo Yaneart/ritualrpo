@@ -1,9 +1,11 @@
-import { services } from "@/data/services";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimateOnScroll } from "../ui/AnimateOnScroll";
+import { getServices } from "@/lib";
 
-export default function Services() {
+export default async function Services() {
+  const services = await getServices();
+
   return (
     <section className="bg-bg-alt py-32 md:py-44">
       <AnimateOnScroll>
@@ -19,7 +21,7 @@ export default function Services() {
             {services.map((service) => (
               <Link
                 href={`/uslugi/${service.slug}`}
-                key={service.title}
+                key={service.id}
                 className="group relative h-80 md:h-96 rounded-2xl overflow-hidden cursor-pointer"
               >
                 <Image
