@@ -4,12 +4,16 @@ import { useState } from "react";
 import { serviceOptions, requiredGroups, extraGroups } from "@/data/calculator";
 import RadioItem from "@/components/ui/RadioItem";
 import CheckboxItem from "@/components/ui/CheckboxItem";
+import { submitRequest } from "@/lib";
 
 interface CalculatorState {
   step: number;
   serviceType: string | null;
   required: Record<string, string>;
   extras: string[];
+  name: string;
+  phone: string;
+  email: string;
 }
 
 export default function CalculatorClient() {
@@ -18,7 +22,14 @@ export default function CalculatorClient() {
     serviceType: null,
     required: {},
     extras: [],
+    name: "",
+    phone: "",
+    email: "",
   });
+
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const selectService = (id: string) => {
     setState((prev) => ({ ...prev, serviceType: id }));
@@ -38,6 +49,14 @@ export default function CalculatorClient() {
         ? prev.extras.filter((item) => item !== id)
         : [...prev.extras, id],
     }));
+  };
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setState((prev) => ({ ...prev, [name]: value }));
+    if (errors[name as keyof typeof errors]) {
+      setErrors({ ...errors, [name]: undefined });
+    }
   };
 
   const nextStep = () => setState((prev) => ({ ...prev, step: prev.step + 1 }));
@@ -71,6 +90,91 @@ export default function CalculatorClient() {
   const allRequiredSelected = requiredGroups.every(
     (group) => state.required[group.id],
   );
+
+  const buildMessage = () => {
+    const lines: string[] = [];
+
+    if (selectedService) {
+      lines.push(
+        `Тип услуги: ${selectedService.title} (${formatPrice(basePrice)} ₽)`,
+      );
+      lines.push("");
+    }
+
+    const requiredItems = Object.entries(state.required)
+      .map(([groupId, optionId]) => {
+        const group = requiredGroups.find((g) => g.id === groupId);
+        const option = group?.options.find((o) => o.id === optionId);
+        if (!group || !option) return null;
+        return `- ${group.title}: ${option.title} — ${formatPrice(option.price)} ₽`;
+      })
+      .filter(Boolean);
+
+    if (requiredItems.length > 0) {
+      lines.push("Комплектация:");
+      lines.push(...(requiredItems as string[]));
+      lines.push("");
+    }
+
+    const extraItems = state.extras
+      .map((id) => {
+        const option = allExtraOptions.find((o) => o.id === id);
+        return option
+          ? `- ${option.title} — ${formatPrice(option.price)} ₽`
+          : null;
+      })
+      .filter(Boolean);
+
+    if (extraItems.length > 0) {
+      lines.push("Доп. услуги:");
+      lines.push(...(extraItems as string[]));
+      lines.push("");
+    }
+
+    lines.push(`Итого: ${formatPrice(totalPrice)} ₽`);
+
+    return lines.join("\n");
+  };
+
+  const handleSubmit = async () => {
+    const newErrors: { name?: string; phone?: string } = {};
+
+    if (!state.name.trim()) {
+      newErrors.name = "Введите ваше имя";
+    }
+
+    const phoneDigits = state.phone.replace(/\D/g, "");
+    if (!state.phone.trim()) {
+      newErrors.phone = "Введите номер телефона";
+    } else if (phoneDigits.length < 10) {
+      newErrors.phone = "Номер телефона слишком короткий";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      await submitRequest({
+        type: "calculator",
+        name: state.name,
+        phone: state.phone,
+        email: state.email || undefined,
+        message: buildMessage(),
+      });
+      setState((prev) => ({ ...prev, step: 5 }));
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Не удалось отправить заявку",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const renderStep = () => {
     switch (state.step) {
@@ -180,6 +284,81 @@ export default function CalculatorClient() {
 
       case 4:
         return (
+          <div>
+            <h3 className="font-heading text-2xl md:text-3xl mb-2">
+              Ваши контакты
+            </h3>
+            <p className="text-text-muted mb-8">
+              Оставьте данные — мы свяжемся с вами и уточним детали
+            </p>
+            <div className="space-y-6 max-w-xl">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm text-text-muted mb-2"
+                >
+                  Ваше имя
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={state.name}
+                  onChange={handleContactChange}
+                  className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${errors.name ? "border-red-500" : "border-border focus:border-accent"}`}
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="block text-sm text-text-muted mb-2"
+                >
+                  Телефон
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={state.phone}
+                  onChange={handleContactChange}
+                  className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${errors.phone ? "border-red-500" : "border-border focus:border-accent"}`}
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm text-text-muted mb-2"
+                >
+                  Email{" "}
+                  <span className="text-text-muted/60">(необязательно)</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={state.email}
+                  onChange={handleContactChange}
+                  className="w-full bg-transparent border-b border-border py-3 text-lg outline-none focus:border-accent transition-colors duration-300"
+                />
+              </div>
+
+              {submitError && (
+                <p className="text-red-500 text-sm">{submitError}</p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 5:
+        return (
           <div className="text-center py-12">
             <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg
@@ -211,6 +390,9 @@ export default function CalculatorClient() {
                   serviceType: null,
                   required: {},
                   extras: [],
+                  name: "",
+                  phone: "",
+                  email: "",
                 })
               }
               className="px-8 py-3 border border-border rounded-xl text-text-muted hover:text-text hover:border-accent/40 transition-colors cursor-pointer"
@@ -235,7 +417,7 @@ export default function CalculatorClient() {
         </div>
 
         <div className="flex items-center justify-center gap-3 mb-12">
-          {[1, 2, 3, 4].map((num) => (
+          {[1, 2, 3, 4, 5].map((num) => (
             <div key={num} className="flex items-center gap-3">
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-colors
@@ -243,7 +425,7 @@ export default function CalculatorClient() {
               >
                 {num}
               </div>
-              {num < 4 && (
+              {num < 5 && (
                 <div
                   className={`w-12 h-px transition-colors ${
                     state.step > num ? "bg-accent" : "bg-border"
@@ -316,12 +498,13 @@ export default function CalculatorClient() {
           </div>
         </div>
 
-        {state.step < 4 && (
+        {state.step < 5 && (
           <div className="flex justify-between mt-10 max-w-4xl">
             {state.step > 1 ? (
               <button
                 onClick={prevStep}
-                className="px-6 py-3 border border-border rounded-xl text-text-muted hover:text-text hover:border-accent/40 transition-colors cursor-pointer"
+                disabled={isSubmitting}
+                className="px-6 py-3 border border-border rounded-xl text-text-muted hover:text-text hover:border-accent/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 Назад
               </button>
@@ -329,7 +512,7 @@ export default function CalculatorClient() {
               <div />
             )}
 
-            {state.step < 3 ? (
+            {state.step < 4 ? (
               <button
                 onClick={nextStep}
                 disabled={
@@ -338,14 +521,15 @@ export default function CalculatorClient() {
                 }
                 className="px-8 py-3 bg-accent text-white rounded-xl hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
-                Далее
+                {state.step === 3 ? "К контактам" : "Далее"}
               </button>
             ) : (
               <button
-                onClick={nextStep}
-                className="px-8 py-3 bg-accent text-white rounded-xl hover:bg-accent-hover transition-colors cursor-pointer"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="px-8 py-3 bg-accent text-white rounded-xl hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
-                Отправить заявку
+                {isSubmitting ? "Отправляем..." : "Отправить заявку"}
               </button>
             )}
           </div>
