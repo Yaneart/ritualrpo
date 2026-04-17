@@ -1,15 +1,20 @@
 "use client";
 
+import { submitRequest } from "@/lib";
 import { useState } from "react";
 
 export default function ContactForm() {
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    email: "",
     message: "",
   });
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -20,7 +25,7 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { name?: string; phone?: string } = {};
 
@@ -40,7 +45,25 @@ export default function ContactForm() {
       return;
     }
 
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      await submitRequest({
+        type: "contact",
+        name: form.name,
+        phone: form.phone,
+        email: form.email || undefined,
+        message: form.message || undefined,
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Не удалось отправить заявку",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -160,8 +183,30 @@ export default function ContactForm() {
                       className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${errors.phone ? "border-red-500" : "border-border focus:border-accent"}`}
                     />
                     {errors.phone && (
-                      <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.phone}
+                      </p>
                     )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm text-text-muted mb-2"
+                    >
+                      Email{" "}
+                      <span className="text-text-muted/60">
+                        (необязательно)
+                      </span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      className="w-full bg-transparent border-b border-border py-3 text-lg outline-none focus:border-accent transition-colors duration-300"
+                    />
                   </div>
 
                   <div>
@@ -181,11 +226,16 @@ export default function ContactForm() {
                     />
                   </div>
 
+                  {submitError && (
+                    <p className="text-red-500 text-sm">{submitError}</p>
+                  )}
+
                   <button
                     type="submit"
-                    className="bg-accent hover:bg-accent-hover text-white font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300 mt-4 cursor-pointer md:w-fit"
+                    disabled={isSubmitting}
+                    className="bg-accent hover:bg-accent-hover disabled:bg-accent/50 disabled:cursor-not-allowed text-white font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300 mt-4 cursor-pointer md:w-fit"
                   >
-                    Отправить
+                    {isSubmitting ? "Отправляем..." : "Отправить"}
                   </button>
                 </form>
               )}

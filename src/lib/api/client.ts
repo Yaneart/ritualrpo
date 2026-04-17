@@ -4,17 +4,27 @@ export async function fetchAPI<T>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<T> {
-  const response = await fetch(`${API_URL}/${endpoint}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    },
-    ...options,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}/${endpoint}`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...options?.headers,
+      },
+      ...options,
+    });
+  } catch {
+    throw new Error(
+      "Не удалось связаться с сервером. Проверьте подключение и попробуйте снова.",
+    );
+  }
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
-    throw new Error(error.message || `Ошибка ${response.status}`);
+    const message = Array.isArray(error.message)
+      ? error.message.join(". ")
+      : error.message || `Ошибка ${response.status}`;
+    throw new Error(message);
   }
 
   return response.json();
