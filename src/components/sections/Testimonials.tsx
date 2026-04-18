@@ -1,24 +1,14 @@
+import { getReviews } from "@/lib";
 import { AnimateOnScroll } from "../ui/AnimateOnScroll";
+import Link from "next/link";
 
-const testimonials = [
-  {
-    text: "В самый тяжёлый момент они взяли всё на себя. Мы могли просто быть рядом с семьёй, не думая об организации.",
-    name: "Елена М.",
-    relation: "потеря отца",
-  },
-  {
-    text: "Очень деликатное и профессиональное отношение. Всё было организовано достойно, именно так, как мы хотели.",
-    name: "Андрей К.",
-    relation: "потеря матери",
-  },
-  {
-    text: "Благодарим за круглосуточную поддержку. Позвонили ночью — приехали через 40 минут. Помогли с документами и всей организацией.",
-    name: "Ольга С.",
-    relation: "потеря супруга",
-  },
-];
+export const revalidate = 60;
 
-export default function Testimonials() {
+export default async function Testimonials() {
+  const reviews = await getReviews(6);
+
+  if (reviews.length === 0) return null;
+
   return (
     <section className="bg-bg-alt py-32 md:py-44">
       <AnimateOnScroll>
@@ -40,23 +30,43 @@ export default function Testimonials() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:items-start">
-            {testimonials.map((item, index) => (
+            {reviews.map((item, index) => (
               <div
-                key={item.name}
-                className={`border border-border rounded-2xl p-8 flex flex-col justify-between ${
-                  index === 1 ? "md:mt-12" : ""
+                key={item.id}
+                className={`bg-bg border border-border rounded-2xl p-8 flex flex-col justify-between ${
+                  index % 3 === 1 ? "md:mt-12" : ""
                 }`}
               >
-                <p className="text-lg leading-relaxed mb-8">
-                  &ldquo;{item.text}&rdquo;
-                </p>
-
                 <div>
-                  <p className="font-semibold">{item.name}</p>
-                  <p className="text-sm text-text-muted">{item.relation}</p>
+                  <div className="flex gap-1 mb-4 text-lg">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className={
+                          i < item.rating ? "text-gold" : "text-gold/20"
+                        }
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-lg leading-relaxed mb-8">
+                    &ldquo;{item.text}&rdquo;
+                  </p>
                 </div>
+
+                <p className="font-semibold">{item.name}</p>
               </div>
             ))}
+          </div>
+
+          <div className="text-center mt-16">
+            <Link
+              href="/otzyvy"
+              className="inline-block border border-border hover:border-accent text-text-muted hover:text-accent px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-all duration-300"
+            >
+              Все отзывы →
+            </Link>
           </div>
         </div>
       </AnimateOnScroll>

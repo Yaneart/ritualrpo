@@ -38,3 +38,28 @@ export interface CreateRequestData {
   email?: string;
   message?: string;
 }
+
+// Отзыв
+export interface Review {
+  id: string;
+  name: string;
+  rating: number;
+  text: string;
+  isApproved: boolean;
+  createdAt: string;
+}
+
+// Данные для создания отзыва
+export interface CreateReviewData {
+  name: string;
+  rating: number;
+  text: string;
+}
+
+// Вопрос FAQ
+export interface Faq {
+  id: string;
+  question: string;
+  answer: string;
+  order: number;
+}

@@ -6,3 +6,5 @@ export {
   getProductBySlug,
 } from "./api/products";
 export { submitRequest } from "./api/requests";
+export { getReviews, submitReview } from "./api/reviews";
+export { getFaqs } from "./api/faq";
