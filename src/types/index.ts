@@ -63,3 +63,34 @@ export interface Faq {
   answer: string;
   order: number;
 }
+
+// Калькулятор: тип услуги (шаг 1)
+export interface CalculatorServiceType {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  basePrice: number;
+  order: number;
+}
+
+// Калькулятор: опция внутри группы
+export interface CalculatorOption {
+  id: string;
+  slug: string;
+  title: string;
+  description: string | null;
+  price: number;
+  order: number;
+  groupId: string;
+}
+
+// Калькулятор: группа опций (required/extra) с вложенными options
+export interface CalculatorGroup {
+  id: string;
+  slug: string;
+  title: string;
+  type: "required" | "extra";
+  order: number;
+  options: CalculatorOption[];
+}

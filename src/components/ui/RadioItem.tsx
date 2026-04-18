@@ -1,7 +1,7 @@
-import { type ItemOption } from "@/data/calculator";
+import { CalculatorOption } from "@/types";
 
 interface RadioItemProps {
-  item: ItemOption;
+  item: CalculatorOption;
   selected: boolean;
   onSelect: () => void;
   formatPrice: (price: number) => string;

@@ -1,7 +1,7 @@
-import { type ItemOption } from "@/data/calculator";
+import { CalculatorOption } from "@/types";
 
 interface CheckboxItemProps {
-  item: ItemOption;
+  item: CalculatorOption;
   checked: boolean;
   onToggle: (id: string) => void;
   formatPrice: (price: number) => string;

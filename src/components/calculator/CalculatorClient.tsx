@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { serviceOptions, requiredGroups, extraGroups } from "@/data/calculator";
+import { useMemo, useState } from "react";
 import RadioItem from "@/components/ui/RadioItem";
 import CheckboxItem from "@/components/ui/CheckboxItem";
 import { submitRequest } from "@/lib";
+import { CalculatorGroup, CalculatorServiceType } from "@/types";
 
 interface CalculatorState {
   step: number;
@@ -16,7 +16,15 @@ interface CalculatorState {
   email: string;
 }
 
-export default function CalculatorClient() {
+interface CalculatorClientProps {
+  serviceTypes: CalculatorServiceType[];
+  groups: CalculatorGroup[];
+}
+
+export default function CalculatorClient({
+  serviceTypes,
+  groups,
+}: CalculatorClientProps) {
   const [state, setState] = useState<CalculatorState>({
     step: 1,
     serviceType: null,
@@ -30,6 +38,15 @@ export default function CalculatorClient() {
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const requiredGroups = useMemo(
+    () => groups.filter((g) => g.type === "required"),
+    [groups],
+  );
+  const extraGroups = useMemo(
+    () => groups.filter((g) => g.type === "extra"),
+    [groups],
+  );
 
   const selectService = (id: string) => {
     setState((prev) => ({ ...prev, serviceType: id }));
@@ -62,9 +79,7 @@ export default function CalculatorClient() {
   const nextStep = () => setState((prev) => ({ ...prev, step: prev.step + 1 }));
   const prevStep = () => setState((prev) => ({ ...prev, step: prev.step - 1 }));
 
-  const selectedService = serviceOptions.find(
-    (s) => s.id === state.serviceType,
-  );
+  const selectedService = serviceTypes.find((s) => s.id === state.serviceType);
   const basePrice = selectedService?.basePrice ?? 0;
 
   const requiredPrice = Object.entries(state.required).reduce(
@@ -186,7 +201,7 @@ export default function CalculatorClient() {
             </h3>
             <p className="text-text-muted mb-8">Выберите основную услугу</p>
             <div className="grid gap-4 md:grid-cols-2">
-              {serviceOptions.map((service) => (
+              {serviceTypes.map((service) => (
                 <button
                   key={service.id}
                   onClick={() => selectService(service.id)}
