@@ -68,7 +68,7 @@ export default function ContactForm() {
 
   return (
     <>
-      <section className="pt-40 pb-12 bg-bg">
+      <section className="pt-30 pb-12 bg-bg">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
             [ Контакты ]

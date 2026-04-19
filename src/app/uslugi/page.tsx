@@ -14,7 +14,7 @@ export default async function UslugiPage() {
 
   return (
     <>
-      <section className="pt-40 pb-20 bg-bg">
+      <section className="pt-40 bg-bg">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
             [ Услуги ]

@@ -7,7 +7,7 @@ interface AnimateOnScrollProps {
   className?: string;
 }
 
-export function AnimateOnScroll({
+export default function AnimateOnScroll({
   children,
   className = "",
 }: AnimateOnScrollProps) {

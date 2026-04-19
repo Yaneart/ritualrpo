@@ -4,7 +4,7 @@ export default function FloatingMessenger() {
       href="https://t.me/ТВОЙ_ЮЗЕРНЕЙМ"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-bg-dark text-white ring-2 ring-white/30 hover:ring-white/60 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
+      className="fixed bottom-3 right-3 md:bottom-6 md:right-6 z-50 w-10 h-10 md:w-12 md:h-12 bg-bg-dark text-white ring-2 ring-white/30 hover:ring-white/60 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
       aria-label="Написать в Telegram"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

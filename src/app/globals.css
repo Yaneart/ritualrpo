@@ -14,6 +14,40 @@
   }
 }
 
+@layer utilities {
+  .label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    line-height: 1;
+  }
+
+  @media (min-width: 768px) {
+    .label {
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+    }
+  }
+
+  .italic-heading {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @theme {
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-heading: var(--font-heading), Georgia, serif;

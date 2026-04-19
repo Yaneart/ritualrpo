@@ -1,6 +1,8 @@
 import { getFaqs } from "@/lib";
-import { FAQAccordion } from "../faq/FAQAccordion";
-import { AnimateOnScroll } from "../ui/AnimateOnScroll";
+import SectionAnchor from "../ui/SectionAnchor";
+import Marker from "../ui/Marker";
+import AnimateOnScroll from "../ui/AnimateOnScroll";
+import FAQAccordion from "../faq/FAQAccordion";
 
 export const revalidate = 60;
 
@@ -9,19 +11,48 @@ export default async function FAQ() {
   if (faqs.length === 0) return null;
 
   return (
-    <section className="bg-bg-dark text-white py-32 md:py-44">
-      <AnimateOnScroll>
-        <div className="max-w-3xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-white/40 mb-4">
-            [ Вопросы ]
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-16">
-            Частые <em className="italic font-normal">вопросы</em>
-          </h2>
+    <section id="faq" className="relative bg-bg-dark text-white">
+      <SectionAnchor
+        theme="dark"
+        num="04 / Вопросы"
+        label="— если вы сомневаетесь"
+        tagline={
+          <>
+            <span>Ответы, которые помогают в первые часы.</span>{" "}
+            <span className="italic-heading text-white/60">
+              Если не нашли своего — позвоните.
+            </span>
+          </>
+        }
+      />
 
-          <FAQAccordion faqs={faqs} />
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 pb-16 md:pb-28">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-4">
+            <AnimateOnScroll>
+              <div className="mb-6">
+                <Marker theme="dark">Спросите / узнайте</Marker>
+              </div>
+              <p className="text-white/60 max-w-xs leading-relaxed mb-8">
+                Мы собрали самые частые вопросы. Если нужна консультация —
+                позвоните, приедем или ответим тут же.
+              </p>
+              <a
+                href="tel:+78126605151"
+                className="inline-flex items-center gap-3 font-heading italic-heading text-3xl text-white hover:text-gold transition-colors duration-300"
+              >
+                +7 (812) 660-51-51
+              </a>
+            </AnimateOnScroll>
+          </div>
+
+          <div className="md:col-span-8">
+            <AnimateOnScroll>
+              <FAQAccordion faqs={faqs} />
+            </AnimateOnScroll>
+          </div>
         </div>
-      </AnimateOnScroll>
+      </div>
     </section>
   );
 }

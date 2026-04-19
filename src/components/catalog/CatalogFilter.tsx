@@ -14,16 +14,16 @@ export default function CatalogFilter({
   products,
   categories,
 }: CatalogFilterProps) {
-  const [activateCategory, setActivateCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState("all");
 
   const filteredProducts =
-    activateCategory === "all"
+    activeCategory === "all"
       ? products
-      : products.filter((q) => q.category?.slug === activateCategory);
+      : products.filter((product) => product.category?.slug === activeCategory);
 
   return (
     <>
-      <section className="bg-bg pb-12 py-40">
+      <section className="bg-bg pt-40 pb-12">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
             [ Каталог ]
@@ -38,10 +38,10 @@ export default function CatalogFilter({
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap gap-3 mb-16">
             <button
-              onClick={() => setActivateCategory("all")}
+              onClick={() => setActiveCategory("all")}
               className={`px-6 py-2.5 rounded-full text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer
       ${
-        activateCategory === "all"
+        activeCategory === "all"
           ? "bg-accent text-white"
           : "border border-border text-text-muted hover:border-accent hover:text-accent"
       }`}
@@ -51,10 +51,10 @@ export default function CatalogFilter({
             {categories.map((category) => (
               <button
                 key={category.id}
-                onClick={() => setActivateCategory(category.slug)}
+                onClick={() => setActiveCategory(category.slug)}
                 className={`px-6 py-2.5 rounded-full text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer
                   ${
-                    activateCategory === category.slug
+                    activeCategory === category.slug
                       ? "bg-accent text-white"
                       : "border border-border text-text-muted hover:border-accent hover:text-accent"
                   }`}

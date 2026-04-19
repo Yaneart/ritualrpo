@@ -6,8 +6,8 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-bg-dark text-bg min-h-screen flex flex-col justify-between">
-      <div className="max-w-7xl mx-auto w-full px-6 pt-55">
+    <footer className="bg-bg-dark text-bg md:min-h-screen flex flex-col justify-between">
+      <div className="max-w-7xl mx-auto w-full px-6 pt-20 md:pt-55">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-12 gap-x-16">
           <div>
             <h3 className="text-base uppercase tracking-widest text-bg mb-6">
@@ -61,7 +61,7 @@ export default function Footer() {
 
       <div>
         <div className="w-full overflow-hidden px-4">
-          <p className="font-heading text-[15vw] font-bold leading-none text-bg/10 select-none whitespace-nowrap text-center uppercase">
+          <p className="font-heading text-[13vw] font-bold leading-none text-bg/10 select-none whitespace-nowrap text-center uppercase">
             &copy;RitualRPO
           </p>
         </div>

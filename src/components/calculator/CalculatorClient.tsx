@@ -420,7 +420,7 @@ export default function CalculatorClient({
   };
 
   return (
-    <section className="py-24 md:py-32 bg-bg">
+    <section className="py-24 md:py-40 bg-bg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12 md:mb-16">
           <p className="text-xs uppercase tracking-[0.2em] text-text-muted mb-4">

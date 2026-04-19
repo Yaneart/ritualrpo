@@ -1,4 +1,5 @@
-import { AnimateOnScroll } from "../ui/AnimateOnScroll";
+import AnimateOnScroll from "../ui/AnimateOnScroll";
+import SectionAnchor from "../ui/SectionAnchor";
 
 const advantages = [
   {
@@ -25,36 +26,56 @@ const advantages = [
 
 export default function WhyUs() {
   return (
-    <section className="bg-bg-dark text-white py-32 md:py-44">
-      <AnimateOnScroll>
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-white/40 mb-4">
-            [ Почему мы ]
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-20 md:mb-28 max-w-3xl">
-            Доверьте заботы{" "}
-            <em className="italic font-normal">профессионалам</em>
-          </h2>
+    <section id="why" className="relative bg-bg-dark text-white">
+      <SectionAnchor
+        theme="dark"
+        num="02 / Почему мы"
+        label="— почему именно мы"
+        tagline={
+          <>
+            <span>Доверьте заботы</span>{" "}
+            <span className="italic-heading text-white/60">профессионалам</span>{" "}
+            <span>— с уважением, вниманием и без лишней суеты.</span>
+          </>
+        }
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-16 md:gap-y-24 md:gap-x-20">
-            {advantages.map((item, index) => (
-              <div
-                key={item.title}
-                className={`${index % 2 === 1 ? "md:mt-16" : ""}`}
-              >
-                <div className="border-l-2 border-white/15 pl-6">
-                  <h3 className="text-2xl md:text-3xl font-heading font-bold mb-4">
-                    {item.title}
-                  </h3>
-                  <p className="text-white/50 leading-relaxed">
-                    {item.description}
-                  </p>
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 pb-14 md:pb-28">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-5">
+            <div className="md:sticky md:top-28">
+              <AnimateOnScroll>
+                <div className="aspect-[4/5] w-full bg-white/5 border border-white/10 flex items-center justify-center">
+                  <span className="label text-white/40">[ изображение ]</span>
                 </div>
-              </div>
+              </AnimateOnScroll>
+            </div>
+          </div>
+
+          <div className="md:col-span-7 md:pl-10">
+            {advantages.map((item, i) => (
+              <AnimateOnScroll
+                key={item.title}
+                className={i > 0 ? "border-t border-white/15" : ""}
+              >
+                <div className="flex items-start gap-6 md:gap-10 py-8 md:py-10">
+                  <span className="label text-white/50 pt-2 shrink-0">
+                    [ {String(i + 1).padStart(2, "0")} ]
+                  </span>
+                  <div className="flex-1">
+                    <h3 className="font-heading text-3xl md:text-5xl leading-[1.05] tracking-[-0.01em] text-white mb-4">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/60 leading-relaxed max-w-xl">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
-      </AnimateOnScroll>
+      </div>
     </section>
   );
 }

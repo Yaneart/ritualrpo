@@ -1,45 +1,40 @@
-import { AnimateOnScroll } from "../ui/AnimateOnScroll";
+import AnimateOnScroll from "../ui/AnimateOnScroll";
+import Marker from "../ui/Marker";
+import CTAForm from "../cta/CTAForm";
 
 export default function CTA() {
   return (
-    <section className="bg-bg-alt py-32 md:py-44">
-      <AnimateOnScroll>
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-            [ 24/7 ]
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Мы рядом в <em className="italic font-normal">любое время</em>
-          </h2>
+    <section id="cta" className="relative bg-bg overflow-hidden">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-16 md:py-40">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12 md:items-end">
+          <div className="md:col-span-7">
+            <AnimateOnScroll>
+              <div className="mb-8">
+                <Marker>Помощь / круглосуточно</Marker>
+              </div>
+            </AnimateOnScroll>
 
-          <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-12">
-            Позвоните — и мы возьмём все заботы на себя. Бесплатная
-            консультация, выезд специалиста в течение часа.
-          </p>
+            <AnimateOnScroll>
+              <h2 className="font-heading leading-[0.9] text-[clamp(56px,9vw,150px)] tracking-[-0.02em] text-text">
+                <span className="italic-heading">Позвоните.</span> Мы рядом.
+              </h2>
+            </AnimateOnScroll>
 
-          <a
-            href="tel:+78126605151"
-            className="inline-block font-heading text-4xl md:text-5xl font-bold text-accent hover:text-accent-hover transition-colors duration-300 mb-8"
-          >
-            +7 (812) 660-51-51
-          </a>
+            <AnimateOnScroll>
+              <p className="text-text-muted max-w-lg leading-relaxed mt-8 text-lg pe-12 md:pe-0">
+                Оставьте номер — перезвоним в течение 3 минут. Бесплатная
+                консультация и выезд агента по городу.
+              </p>
+            </AnimateOnScroll>
+          </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="tel:+78126605151"
-              className="bg-accent hover:bg-accent-hover text-white font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300"
-            >
-              Позвонить сейчас
-            </a>
-            <a
-              href="/kontakty"
-              className="border border-border hover:border-accent text-text-muted hover:text-accent px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-all duration-300"
-            >
-              Заказать обратный звонок
-            </a>
+          <div className="md:col-span-5">
+            <AnimateOnScroll>
+              <CTAForm />
+            </AnimateOnScroll>
           </div>
         </div>
-      </AnimateOnScroll>
+      </div>
     </section>
   );
 }
