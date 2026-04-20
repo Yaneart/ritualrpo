@@ -13,3 +13,4 @@ export {
   getCalculatorGroups,
 } from "./api/calculator";
 export { getTeam, getStats } from "./api/about";
+export { getAdvantages } from "./api/advantages";

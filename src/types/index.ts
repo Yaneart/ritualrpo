@@ -111,3 +111,11 @@ export interface TeamMember {
   photo: string;
   order: number;
 }
+
+// Преимущество (секция "Почему мы")
+export interface Advantage {
+  id: string;
+  title: string;
+  description: string;
+  order: number;
+}

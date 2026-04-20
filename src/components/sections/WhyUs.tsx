@@ -1,31 +1,15 @@
 import Image from "next/image";
 import AnimateOnScroll from "../ui/AnimateOnScroll";
 import SectionAnchor from "../ui/SectionAnchor";
+import { getAdvantages } from "@/lib";
 
-const advantages = [
-  {
-    title: "Круглосуточно",
-    description:
-      "Мы на связи 24/7. Звоните в любое время — мы сразу приедем и поможем.",
-  },
-  {
-    title: "Всё берём на себя",
-    description:
-      "Оформление документов, транспортировка, организация церемонии — вам не нужно ни о чём беспокоиться.",
-  },
-  {
-    title: "Прозрачные цены",
-    description:
-      "Фиксированная стоимость без скрытых наценок. Вы знаете итоговую сумму до начала работы.",
-  },
-  {
-    title: "Опыт и уважение",
-    description:
-      "Более 10 лет работы. Каждая церемония проводится с достоинством и вниманием к деталям.",
-  },
-];
+export const revalidate = 60;
 
-export default function WhyUs() {
+export default async function WhyUs() {
+  const advantages = await getAdvantages();
+
+  if (advantages.length === 0) return null;
+
   return (
     <section id="why" className="relative bg-bg-dark text-white">
       <SectionAnchor
@@ -62,7 +46,7 @@ export default function WhyUs() {
           <div className="md:col-span-7 md:pl-10">
             {advantages.map((item, i) => (
               <AnimateOnScroll
-                key={item.title}
+                key={item.id}
                 className={i > 0 ? "border-t border-white/15" : ""}
               >
                 <div className="flex items-start gap-6 md:gap-10 py-8 md:py-10">
