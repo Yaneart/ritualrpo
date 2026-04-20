@@ -1,3 +1,4 @@
+import Image from "next/image";
 import AnimateOnScroll from "../ui/AnimateOnScroll";
 import SectionAnchor from "../ui/SectionAnchor";
 
@@ -45,8 +46,14 @@ export default function WhyUs() {
           <div className="md:col-span-5">
             <div className="md:sticky md:top-28">
               <AnimateOnScroll>
-                <div className="aspect-[4/5] w-full bg-white/5 border border-white/10 flex items-center justify-center">
-                  <span className="label text-white/40">[ изображение ]</span>
+                <div className="relative aspect-[4/5] w-full overflow-hidden border border-white/10">
+                  <Image
+                    src="/images/why/why-us.png"
+                    alt="Почему выбирают RitualRPO"
+                    fill
+                    sizes="(min-width: 768px) 40vw, 100vw"
+                    className="object-cover"
+                  />
                 </div>
               </AnimateOnScroll>
             </div>

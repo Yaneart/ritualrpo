@@ -94,3 +94,20 @@ export interface CalculatorGroup {
   order: number;
   options: CalculatorOption[];
 }
+
+// О компании: статистика
+export interface Stat {
+  id: string;
+  value: string;
+  label: string;
+  order: number;
+}
+
+// О компании: член команды
+export interface TeamMember {
+  id: string;
+  name: string;
+  position: string;
+  photo: string;
+  order: number;
+}

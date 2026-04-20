@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { stats, team } from "@/data/about";
 import { Metadata } from "next";
+import { getStats, getTeam } from "@/lib";
 
 export const metadata: Metadata = {
   title: "О компании",
@@ -8,7 +8,11 @@ export const metadata: Metadata = {
     "Более 10 лет опыта в сфере ритуальных услуг Санкт-Петербурга. Профессиональная и деликатная помощь круглосуточно.",
 };
 
-export default function AboutPage() {
+export const revalidate = 60;
+
+export default async function AboutPage() {
+  const [team, stats] = await Promise.all([getTeam(), getStats()]);
+
   return (
     <>
       <section className="pt-30 pb-24 bg-bg">
@@ -48,51 +52,54 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-bg-alt py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <p className="font-heading text-4xl md:text-5xl font-bold mb-2">
-                  {stat.number}
-                </p>
-                <p className="text-text-muted text-sm uppercase tracking-widest">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-bg py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-            [ Наша команда ]
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl font-bold mb-16">
-            Люди, которым <em className="italic font-normal">доверяют</em>
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {team.map((person) => (
-              <div key={person.name}>
-                <div className="relative h-80 rounded-2xl overflow-hidden mb-4">
-                  <Image
-                    src={person.image}
-                    alt={person.name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover object-top"
-                  />
+      {stats.length > 0 && (
+        <section className="bg-bg-alt py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {stats.map((stat) => (
+                <div key={stat.id}>
+                  <p className="font-heading text-4xl md:text-5xl font-bold mb-2">
+                    {stat.value}
+                  </p>
+                  <p className="text-text-muted text-sm uppercase tracking-widest">
+                    {stat.label}
+                  </p>
                 </div>
-                <h3 className="font-semibold text-xl mb-1">{person.name}</h3>
-                <p className="text-text-muted">{person.role}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+      {team.length > 0 && (
+        <section className="bg-bg py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
+              [ Наша команда ]
+            </p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-16">
+              Люди, которым <em className="italic font-normal">доверяют</em>
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {team.map((person) => (
+                <div key={person.id}>
+                  <div className="relative h-80 rounded-2xl overflow-hidden mb-4">
+                    <Image
+                      src={person.photo}
+                      alt={person.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <h3 className="font-semibold text-xl mb-1">{person.name}</h3>
+                  <p className="text-text-muted">{person.position}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -12,3 +12,4 @@ export {
   getCalculatorServiceTypes,
   getCalculatorGroups,
 } from "./api/calculator";
+export { getTeam, getStats } from "./api/about";
