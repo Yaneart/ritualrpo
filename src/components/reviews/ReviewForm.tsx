@@ -2,6 +2,7 @@
 
 import { submitReview } from "@/lib";
 import { useState } from "react";
+import Marker from "@/components/ui/Marker";
 
 export default function ReviewForm() {
   const [form, setForm] = useState({ name: "", text: "" });
@@ -42,11 +43,7 @@ export default function ReviewForm() {
     setSubmitError(null);
 
     try {
-      await submitReview({
-        name: form.name,
-        rating,
-        text: form.text,
-      });
+      await submitReview({ name: form.name, rating, text: form.text });
       setIsSubmitted(true);
     } catch (error) {
       setSubmitError(
@@ -59,12 +56,13 @@ export default function ReviewForm() {
 
   if (isSubmitted) {
     return (
-      <div className="border border-border rounded-2xl p-12 text-center bg-bg">
-        <p className="font-heading text-2xl font-bold mb-4">
-          Спасибо за отзыв!
+      <div className="border-t border-border pt-10">
+        <Marker>Спасибо</Marker>
+        <p className="font-heading text-3xl md:text-4xl leading-[1.05] tracking-[-0.01em] text-text mt-6 mb-4">
+          Отзыв принят.
         </p>
-        <p className="text-text-muted">
-          Ваш отзыв появится на сайте после модерации.
+        <p className="text-text-muted leading-relaxed">
+          Появится на сайте после модерации.
         </p>
       </div>
     );
@@ -73,7 +71,7 @@ export default function ReviewForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <div>
-        <label htmlFor="name" className="block text-sm text-text-muted mb-2">
+        <label htmlFor="name" className="label text-text-muted block mb-2">
           Ваше имя
         </label>
         <input
@@ -84,16 +82,16 @@ export default function ReviewForm() {
           value={form.name}
           onChange={handleChange}
           className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${
-            errors.name ? "border-red-500" : "border-border focus:border-accent"
+            errors.name ? "border-red-400" : "border-border focus:border-text"
           }`}
         />
         {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+          <p className="text-red-400 text-sm mt-1">{errors.name}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm text-text-muted mb-2">Оценка</label>
+        <label className="label text-text-muted block mb-3">Оценка</label>
         <div className="flex gap-1 text-3xl">
           {Array.from({ length: 5 }).map((_, i) => {
             const starNumber = i + 1;
@@ -104,14 +102,12 @@ export default function ReviewForm() {
                 key={i}
                 onClick={() => {
                   setRating(starNumber);
-                  if (errors.rating) {
-                    setErrors({ ...errors, rating: undefined });
-                  }
+                  if (errors.rating) setErrors({ ...errors, rating: undefined });
                 }}
                 onMouseEnter={() => setHoverRating(starNumber)}
                 onMouseLeave={() => setHoverRating(0)}
                 className={`transition-colors cursor-pointer ${
-                  active ? "text-gold" : "text-accent/40"
+                  active ? "text-gold" : "text-text/20"
                 }`}
                 aria-label={`Оценка ${starNumber} из 5`}
               >
@@ -121,12 +117,12 @@ export default function ReviewForm() {
           })}
         </div>
         {errors.rating && (
-          <p className="text-red-500 text-sm mt-1">{errors.rating}</p>
+          <p className="text-red-400 text-sm mt-1">{errors.rating}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="text" className="block text-sm text-text-muted mb-2">
+        <label htmlFor="text" className="label text-text-muted block mb-2">
           Отзыв
         </label>
         <textarea
@@ -137,24 +133,25 @@ export default function ReviewForm() {
           value={form.text}
           onChange={handleChange}
           className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 resize-none ${
-            errors.text ? "border-red-500" : "border-border focus:border-accent"
+            errors.text ? "border-red-400" : "border-border focus:border-text"
           }`}
         />
         {errors.text && (
-          <p className="text-red-500 text-sm mt-1">{errors.text}</p>
+          <p className="text-red-400 text-sm mt-1">{errors.text}</p>
         )}
       </div>
 
-      {submitError && <p className="text-red-500 text-sm">{submitError}</p>}
+      {submitError && <p className="text-red-400 text-sm">{submitError}</p>}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="bg-accent hover:bg-accent-hover disabled:bg-accent/50 disabled:cursor-not-allowed text-white font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors
-duration-300 mt-4 cursor-pointer md:w-fit"
-      >
-        {isSubmitting ? "Отправляем..." : "Оставить отзыв"}
-      </button>
+      <div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-block bg-text hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed text-white hover:text-text px-8 py-5 rounded-full text-sm uppercase tracking-wider transition-colors duration-300 cursor-pointer"
+        >
+          {isSubmitting ? "Отправляем..." : "Оставить отзыв"}
+        </button>
+      </div>
     </form>
   );
 }

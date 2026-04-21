@@ -2,6 +2,7 @@
 
 import { submitRequest } from "@/lib";
 import { useState } from "react";
+import Marker from "@/components/ui/Marker";
 
 export default function ContactForm() {
   const [form, setForm] = useState({
@@ -12,7 +13,6 @@ export default function ContactForm() {
   });
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -29,9 +29,7 @@ export default function ContactForm() {
     e.preventDefault();
     const newErrors: { name?: string; phone?: string } = {};
 
-    if (!form.name.trim()) {
-      newErrors.name = "Введите ваше имя";
-    }
+    if (!form.name.trim()) newErrors.name = "Введите ваше имя";
 
     const phoneDigits = form.phone.replace(/\D/g, "");
     if (!form.phone.trim()) {
@@ -66,183 +64,107 @@ export default function ContactForm() {
     }
   };
 
+  if (isSubmitted) {
+    return (
+      <div className="border-t border-border pt-10">
+        <Marker>Спасибо</Marker>
+        <p className="font-heading text-3xl md:text-4xl leading-[1.05] tracking-[-0.01em] text-text mt-6 mb-4">
+          Заявка принята.
+        </p>
+        <p className="text-text-muted leading-relaxed">
+          Мы свяжемся с вами в ближайшее время.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <section className="pt-30 pb-12 bg-bg">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-            [ Контакты ]
-          </p>
-          <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold max-w-4xl">
-            Свяжитесь с <em className="italic font-normal">нами</em>
-          </h1>
+    <div>
+      <div className="mb-5">
+        <Marker>Обратная связь</Marker>
+      </div>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+        <div>
+          <label htmlFor="name" className="label text-text-muted block mb-1.5">
+            Ваше имя
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            value={form.name}
+            onChange={handleChange}
+            className={`w-full bg-transparent border-b py-2 text-base outline-none transition-colors duration-300 ${
+              errors.name ? "border-red-400" : "border-border focus:border-text"
+            }`}
+          />
+          {errors.name && (
+            <p className="text-red-400 text-sm mt-1">{errors.name}</p>
+          )}
         </div>
-      </section>
 
-      <section className="bg-bg pb-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div>
-              <div className="mb-12">
-                <h2 className="text-sm uppercase tracking-widest text-text-muted mb-4">
-                  Телефон
-                </h2>
-                <a
-                  href="tel:+78126605151"
-                  className="font-heading text-3xl md:text-4xl font-bold hover:text-accent transition-colors duration-300"
-                >
-                  +7 (812) 660-51-51
-                </a>
-                <p className="text-text-muted mt-2">
-                  Круглосуточно, без выходных
-                </p>
-              </div>
-
-              <div className="mb-12">
-                <h2 className="text-sm uppercase tracking-widest text-text-muted mb-4">
-                  Email
-                </h2>
-                <a
-                  href="mailto:info@ritualrpo.ru"
-                  className="text-xl hover:text-accent transition-colors duration-300"
-                >
-                  info@ritualrpo.ru
-                </a>
-              </div>
-
-              <div className="mb-12">
-                <h2 className="text-sm uppercase tracking-widest text-text-muted mb-4">
-                  Адрес
-                </h2>
-                <p className="text-xl">г. Санкт-Петербург</p>
-                <p className="text-text-muted mt-1">ул. Примерная, д. 1</p>
-              </div>
-
-              <div>
-                <h2 className="text-sm uppercase tracking-widest text-text-muted mb-4">
-                  График работы
-                </h2>
-                <p className="text-xl">Круглосуточно</p>
-                <p className="text-text-muted mt-1">
-                  Выезд специалиста в течение часа
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-sm uppercase tracking-widest text-text-muted mb-8">
-                Обратная связь
-              </h2>
-
-              {isSubmitted ? (
-                <div className="border border-border rounded-2xl p-12 text-center">
-                  <p className="font-heading text-2xl font-bold mb-4">
-                    Спасибо за обращение
-                  </p>
-                  <p className="text-text-muted">
-                    Мы свяжемся с вами в ближайшее время
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm text-text-muted mb-2"
-                    >
-                      Ваше имя
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={form.name}
-                      onChange={handleChange}
-                      className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${errors.name ? "border-red-500" : "border-border focus:border-accent"}`}
-                    />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className="block text-sm text-text-muted mb-2"
-                    >
-                      Телефон
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={form.phone}
-                      onChange={handleChange}
-                      className={`w-full bg-transparent border-b py-3 text-lg outline-none transition-colors duration-300 ${errors.phone ? "border-red-500" : "border-border focus:border-accent"}`}
-                    />
-                    {errors.phone && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.phone}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm text-text-muted mb-2"
-                    >
-                      Email{" "}
-                      <span className="text-text-muted/60">
-                        (необязательно)
-                      </span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      className="w-full bg-transparent border-b border-border py-3 text-lg outline-none focus:border-accent transition-colors duration-300"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm text-text-muted mb-2"
-                    >
-                      Сообщение
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={4}
-                      value={form.message}
-                      onChange={handleChange}
-                      className="w-full bg-transparent border-b border-border py-3 text-lg outline-none focus:border-accent transition-colors duration-300 resize-none"
-                    />
-                  </div>
-
-                  {submitError && (
-                    <p className="text-red-500 text-sm">{submitError}</p>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-accent hover:bg-accent-hover disabled:bg-accent/50 disabled:cursor-not-allowed text-white font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300 mt-4 cursor-pointer md:w-fit"
-                  >
-                    {isSubmitting ? "Отправляем..." : "Отправить"}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
+        <div>
+          <label htmlFor="phone" className="label text-text-muted block mb-1.5">
+            Телефон
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            value={form.phone}
+            onChange={handleChange}
+            className={`w-full bg-transparent border-b py-2 text-base outline-none transition-colors duration-300 ${
+              errors.phone ? "border-red-400" : "border-border focus:border-text"
+            }`}
+          />
+          {errors.phone && (
+            <p className="text-red-400 text-sm mt-1">{errors.phone}</p>
+          )}
         </div>
-      </section>
-    </>
+
+        <div>
+          <label htmlFor="email" className="label text-text-muted block mb-1.5">
+            Email <span className="text-text-muted/50">(необязательно)</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full bg-transparent border-b border-border py-2 text-base outline-none focus:border-text transition-colors duration-300"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="message" className="label text-text-muted block mb-1.5">
+            Сообщение
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows={3}
+            value={form.message}
+            onChange={handleChange}
+            className="w-full bg-transparent border-b border-border py-2 text-base outline-none focus:border-text transition-colors duration-300 resize-none"
+          />
+        </div>
+
+        {submitError && <p className="text-red-400 text-sm">{submitError}</p>}
+
+        <div className="pt-2 flex justify-center md:justify-start">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="inline-block bg-text hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed text-white hover:text-text px-7 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300 cursor-pointer"
+          >
+            {isSubmitting ? "Отправляем..." : "Отправить заявку"}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

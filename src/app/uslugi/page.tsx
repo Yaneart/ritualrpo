@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { getServices } from "@/lib";
+import SectionAnchor from "@/components/ui/SectionAnchor";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import CTA from "@/components/sections/CTA";
 
 export const metadata: Metadata = {
   title: "Услуги",
@@ -14,50 +17,62 @@ export default async function UslugiPage() {
 
   return (
     <>
-      <section className="pt-40 bg-bg">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-            [ Услуги ]
-          </p>
-          <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold max-w-4xl">
-            Всё для достойного <em className="italic font-normal">прощания</em>
-          </h1>
-        </div>
+      <section className="bg-bg">
+        <SectionAnchor
+          num="01 / Услуги"
+          label="— четыре направления"
+          tagline={
+            <>
+              <span>Всё для достойного</span>{" "}
+              <span className="italic-heading text-text-muted">прощания</span>
+              <span>.</span>
+            </>
+          }
+        />
       </section>
 
-      <section className="bg-bg-alt py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service) => (
-              <Link
-                href={`/uslugi/${service.slug}`}
-                key={service.id}
-                className="group relative h-80 md:h-96 rounded-2xl overflow-hidden block"
-              >
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+      <section className="bg-bg pb-20 md:pb-32">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+            {services.map((service, i) => {
+              const num = String(i + 1).padStart(2, "0");
 
-                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-bg-dark/50 to-transparent" />
-
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h2 className="font-heading text-2xl md:text-3xl font-bold mb-2">
-                    {service.title}
-                  </h2>
-                  <p className="text-white/70 text-sm md:text-base leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
+              return (
+                <AnimateOnScroll key={service.id}>
+                  <Link
+                    href={`/uslugi/${service.slug}`}
+                    className="group relative block overflow-hidden"
+                  >
+                    <div className="relative w-full aspect-[4/3] overflow-hidden border border-border">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/80 via-bg-dark/20 to-transparent" />
+                      <span className="absolute top-6 left-6 label text-white/70">
+                        [ {num} ]
+                      </span>
+                      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 text-white">
+                        <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.05] tracking-[-0.01em] mb-3">
+                          {service.title}
+                        </h2>
+                        <p className="text-white/70 leading-relaxed max-w-md">
+                          {service.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </AnimateOnScroll>
+              );
+            })}
           </div>
         </div>
       </section>
+
+      <CTA />
     </>
   );
 }

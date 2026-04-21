@@ -12,15 +12,11 @@ export default function CTA() {
               <div className="mb-8">
                 <Marker>Помощь / круглосуточно</Marker>
               </div>
-            </AnimateOnScroll>
 
-            <AnimateOnScroll>
               <h2 className="font-heading leading-[0.9] text-[clamp(56px,9vw,150px)] tracking-[-0.02em] text-text">
                 <span className="italic-heading">Позвоните.</span> Мы рядом.
               </h2>
-            </AnimateOnScroll>
 
-            <AnimateOnScroll>
               <p className="text-text-muted max-w-lg leading-relaxed mt-8 text-lg pe-12 md:pe-0">
                 Оставьте номер — перезвоним в течение 3 минут. Бесплатная
                 консультация и выезд агента по городу.

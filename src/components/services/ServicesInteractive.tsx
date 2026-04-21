@@ -107,12 +107,12 @@ export default function ServicesInteractive({
             )}
           </div>
 
-          <div className="border-t border-border/70">
+          <div className="border-t border-border">
             {services.map((service, i) => (
               <Link
                 key={service.id}
                 href={`/uslugi/${service.slug}`}
-                className={`block border-b border-border/70 py-8 md:py-10 transition-colors duration-500 ${
+                className={`block border-b border-border py-8 md:py-10 transition-colors duration-500 ${
                   active === i && hovering ? "bg-bg/40" : ""
                 }`}
                 onMouseEnter={() => {

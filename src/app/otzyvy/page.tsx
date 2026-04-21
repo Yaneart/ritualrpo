@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import { getReviews } from "@/lib";
 import ReviewForm from "@/components/reviews/ReviewForm";
+import SectionAnchor from "@/components/ui/SectionAnchor";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import Marker from "@/components/ui/Marker";
 
 export const revalidate = 60;
 
@@ -15,71 +18,86 @@ export default async function OtzyvyPage() {
 
   return (
     <>
-      <section className="pt-40 pb-12 bg-bg">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-            [ Отзывы ]
-          </p>
-          <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold max-w-4xl">
-            Отзывы <em className="italic font-normal">клиентов</em>
-          </h1>
-          <p className="text-text-muted leading-relaxed max-w-2xl mt-6">
-            Каждая история — это доверие, которое мы ценим. Благодарим всех, кто
-            нашёл силы поделиться.
-          </p>
-        </div>
-      </section>
+      {/* 00 / Отзывы */}
+      <section className="bg-bg">
+        <SectionAnchor
+          num="00 / Отзывы"
+          label="— что говорят клиенты"
+          tagline={
+            <>
+              <span>Короткие, честные</span>{" "}
+              <span className="italic-heading text-text-muted">истории</span>
+              <span>.</span>
+            </>
+          }
+        />
 
-      <section className="bg-bg-alt py-24">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 pb-28 md:pb-36">
           {reviews.length === 0 ? (
-            <p className="text-text-muted text-center py-12">
-              Пока нет отзывов. Будьте первым!
-            </p>
+            <p className="text-text-muted py-12">Пока нет отзывов. Будьте первым!</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
               {reviews.map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-bg border border-border rounded-2xl p-8 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex gap-1 mb-4 text-lg">
+                <AnimateOnScroll key={item.id}>
+                  <div className="border-l-2 border-gold pl-6">
+                    <div className="flex gap-0.5 mb-4">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <span
                           key={i}
-                          className={
-                            i < item.rating ? "text-gold" : "text-gold/20"
-                          }
+                          className={i < item.rating ? "text-gold" : "text-gold/20"}
                         >
                           ★
                         </span>
                       ))}
                     </div>
-                    <p className="text-lg leading-relaxed mb-8">
-                      &ldquo;{item.text}&rdquo;
-                    </p>
+
+                    <blockquote className="font-heading italic-heading text-xl md:text-2xl leading-[1.3] tracking-[-0.01em] text-text mb-6">
+                      «{item.text}»
+                    </blockquote>
+
+                    <p className="label text-text-muted">{item.name}</p>
                   </div>
-                  <p className="font-semibold">{item.name}</p>
-                </div>
+                </AnimateOnScroll>
               ))}
             </div>
           )}
         </div>
       </section>
 
-      <section className="bg-bg py-24">
-        <div className="max-w-3xl mx-auto px-6">
-          <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-            [ Поделитесь историей ]
-          </p>
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Оставьте <em className="italic font-normal">отзыв</em>
-          </h2>
-          <p className="text-text-muted mb-12">
-            Ваш отзыв появится на сайте после модерации.
-          </p>
-          <ReviewForm />
+      {/* 01 / Оставить отзыв */}
+      <section className="bg-bg border-t border-border">
+        <SectionAnchor
+          num="01 / Оставить отзыв"
+          label="— поделитесь историей"
+          tagline={
+            <>
+              <span>Ваш опыт</span>{" "}
+              <span className="italic-heading text-text-muted">важен</span>
+              <span>.</span>
+            </>
+          }
+        />
+
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 pb-28 md:pb-36">
+          <div className="grid grid-cols-1 md:grid-cols-12 md:gap-12">
+            <div className="md:col-span-5 mb-10 md:mb-0">
+              <AnimateOnScroll>
+                <div className="mb-6">
+                  <Marker>Модерация</Marker>
+                </div>
+                <p className="text-text-muted leading-relaxed max-w-sm">
+                  Отзыв появится на сайте после проверки. Мы ценим каждое
+                  слово и благодарим всех, кто нашёл силы поделиться.
+                </p>
+              </AnimateOnScroll>
+            </div>
+
+            <div className="md:col-span-7">
+              <AnimateOnScroll>
+                <ReviewForm />
+              </AnimateOnScroll>
+            </div>
+          </div>
         </div>
       </section>
     </>

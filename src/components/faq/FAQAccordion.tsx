@@ -15,7 +15,7 @@ export default function FAQAccordion({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const isDark = theme === "dark";
-  const borderColor = isDark ? "border-white/15" : "border-border/70";
+  const borderColor = isDark ? "border-white/15" : "border-border";
   const numColor = isDark ? "text-white/50" : "text-text-muted";
   const questionColor = isDark ? "text-white" : "text-text";
   const plusColor = isDark ? "text-white/50" : "text-text-muted";

@@ -514,7 +514,8 @@ export default function CalculatorClient({
         </div>
 
         {state.step < 5 && (
-          <div className="flex justify-between mt-10 max-w-4xl">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 mt-10">
+          <div className="lg:col-span-2 flex justify-between">
             {state.step > 1 ? (
               <button
                 onClick={prevStep}
@@ -547,6 +548,8 @@ export default function CalculatorClient({
                 {isSubmitting ? "Отправляем..." : "Отправить заявку"}
               </button>
             )}
+          </div>
+          <div className="lg:col-span-1" />
           </div>
         )}
       </div>

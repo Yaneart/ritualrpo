@@ -1,8 +1,10 @@
-import { getProductBySlug, getProducts } from "@/lib";
+import { getProductBySlug, getProducts, getProductsByCategory } from "@/lib";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import Marker from "@/components/ui/Marker";
 
 export async function generateMetadata({
   params,
@@ -41,52 +43,113 @@ export default async function ProductPage({
     notFound();
   }
 
+  const related = product.category?.slug
+    ? (await getProductsByCategory(product.category.slug))
+        .filter((item) => item.id !== product.id)
+        .slice(0, 3)
+    : [];
+
   return (
     <>
-      <section className="pt-40 pb-24 bg-bg">
-        <div className="max-w-7xl mx-auto px-6">
-          <Link
-            href="/katalog"
-            className="inline-block text-sm uppercase tracking-widest text-text-muted hover:text-accent mb-8 transition-colors duration-300"
-          >
-            &larr; Назад в каталог
-          </Link>
+      <section className="bg-bg pt-32 md:pt-40 pb-20 md:pb-32">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12">
+          <AnimateOnScroll>
+            <Link
+              href="/katalog"
+              className="label text-text-muted hover:text-text mb-10 md:mb-16 inline-block transition-colors duration-300"
+            >
+              ← Назад в каталог
+            </Link>
+          </AnimateOnScroll>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-              />
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+            <div className="md:col-span-5">
+              <div className="md:sticky md:top-28">
+                <AnimateOnScroll>
+                  <div className="relative aspect-square w-full max-w-[480px] overflow-hidden border border-border">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 480px"
+                      className="object-cover"
+                    />
+                  </div>
+                </AnimateOnScroll>
+              </div>
             </div>
 
-            <div className="flex flex-col justify-center">
-              <p className="text-sm uppercase tracking-widest text-text-muted mb-4">
-                [ Товар ]
-              </p>
-              <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-                {product.name}
-              </h1>
-              <p className="text-text-muted text-lg leading-relaxed mb-8">
-                {product.description}
-              </p>
-              <p className="font-heading text-3xl md:text-4xl font-bold mb-10">
-                {product.price.toLocaleString("ru-RU")} ₽
-              </p>
-              <a
-                href="tel:+78126605151"
-                className="inline-block bg-accent hover:bg-accent-hover text-white font-semibold px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300 text-center md:w-fit"
-              >
-                Заказать — +7 (812) 660-51-51
-              </a>
+            <div className="md:col-span-7 md:pl-10">
+              <AnimateOnScroll>
+                <div className="mb-6">
+                  <Marker>Товар</Marker>
+                </div>
+
+                <h1 className="font-heading text-[clamp(36px,5vw,60px)] leading-[0.95] tracking-[-0.02em] text-text mb-8 md:mb-10">
+                  {product.name}
+                </h1>
+
+                {product.description && (
+                  <p className="text-text-muted text-lg leading-relaxed mb-10 md:mb-14 max-w-xl">
+                    {product.description}
+                  </p>
+                )}
+              </AnimateOnScroll>
+
+              <AnimateOnScroll>
+                <div className="mb-10 md:mb-12 pt-8 border-t border-border">
+                  <p className="label text-text-muted mb-3">[ Цена ]</p>
+                  <p className="font-heading text-[clamp(40px,5.5vw,72px)] leading-none tracking-[-0.02em] text-text">
+                    {product.price.toLocaleString("ru-RU")} ₽
+                  </p>
+                </div>
+
+                <a
+                  href="tel:+78126605151"
+                  className="inline-block bg-text hover:bg-gold text-white hover:text-text px-8 py-5 rounded-full text-sm uppercase tracking-wider transition-colors duration-300"
+                >
+                  Заказать — +7 (812) 660-51-51
+                </a>
+              </AnimateOnScroll>
             </div>
           </div>
         </div>
       </section>
+
+      {related.length > 0 && (
+        <section className="bg-bg border-t border-border">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-20 md:py-32">
+            <div className="mb-10 md:mb-14">
+              <Marker>Посмотрите также</Marker>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+              {related.map((item) => (
+                <AnimateOnScroll key={item.id}>
+                  <Link href={`/katalog/${item.slug}`} className="group block">
+                    <div className="relative aspect-square overflow-hidden border border-border mb-5">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <h3 className="font-heading text-xl md:text-2xl leading-[1.15] tracking-[-0.01em] text-text mb-2 group-hover:text-gold transition-colors duration-300">
+                      {item.name}
+                    </h3>
+                    <p className="font-heading text-xl md:text-2xl text-text">
+                      {item.price.toLocaleString("ru-RU")} ₽
+                    </p>
+                  </Link>
+                </AnimateOnScroll>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }
