@@ -47,14 +47,19 @@ export default function TestimonialsCarousel({
         “
       </div>
 
-      <div className="min-h-[220px] md:min-h-[260px] flex items-center justify-center py-6">
-        <blockquote
-          key={review.id}
-          className="font-heading text-2xl sm:text-4xl md:text-6xl leading-[1.15] md:leading-[1.1] tracking-[-0.01em] text-text animate-[fadeIn_0.6s_ease] break-words hyphens-auto"
-          lang="ru"
-        >
-          {review.text}
-        </blockquote>
+      <div className="grid py-6">
+        {reviews.map((r, i) => (
+          <blockquote
+            key={r.id}
+            style={{ gridArea: "1 / 1" }}
+            className={`font-heading text-2xl sm:text-4xl md:text-6xl leading-[1.15] md:leading-[1.1] tracking-[-0.01em] text-text break-words hyphens-auto transition-opacity duration-500 ${
+              i === index ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+            lang="ru"
+          >
+            {r.text}
+          </blockquote>
+        ))}
       </div>
 
       <div className="flex items-center justify-center gap-6 mb-12">
