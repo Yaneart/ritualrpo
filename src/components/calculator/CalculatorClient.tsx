@@ -515,41 +515,41 @@ export default function CalculatorClient({
 
         {state.step < 5 && (
           <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 mt-10">
-          <div className="lg:col-span-2 flex justify-between">
-            {state.step > 1 ? (
-              <button
-                onClick={prevStep}
-                disabled={isSubmitting}
-                className="px-6 py-3 border border-border rounded-xl text-text-muted hover:text-text hover:border-accent/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-              >
-                Назад
-              </button>
-            ) : (
-              <div />
-            )}
+            <div className="lg:col-span-2 flex justify-between">
+              {state.step > 1 ? (
+                <button
+                  onClick={prevStep}
+                  disabled={isSubmitting}
+                  className="px-6 py-3 border border-border rounded-xl text-text-muted hover:text-text hover:border-accent/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  Назад
+                </button>
+              ) : (
+                <div />
+              )}
 
-            {state.step < 4 ? (
-              <button
-                onClick={nextStep}
-                disabled={
-                  (state.step === 1 && !state.serviceType) ||
-                  (state.step === 2 && !allRequiredSelected)
-                }
-                className="px-8 py-3 bg-accent text-white rounded-xl hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-              >
-                {state.step === 3 ? "К контактам" : "Далее"}
-              </button>
-            ) : (
-              <button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="px-8 py-3 bg-accent text-white rounded-xl hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-              >
-                {isSubmitting ? "Отправляем..." : "Отправить заявку"}
-              </button>
-            )}
-          </div>
-          <div className="lg:col-span-1" />
+              {state.step < 4 ? (
+                <button
+                  onClick={nextStep}
+                  disabled={
+                    (state.step === 1 && !state.serviceType) ||
+                    (state.step === 2 && !allRequiredSelected)
+                  }
+                  className="px-8 py-3 bg-accent text-white rounded-xl hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  {state.step === 3 ? "К контактам" : "Далее"}
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="px-8 py-3 bg-accent text-white rounded-xl hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  {isSubmitting ? "Отправляем..." : "Отправить заявку"}
+                </button>
+              )}
+            </div>
+            <div className="lg:col-span-1" />
           </div>
         )}
       </div>

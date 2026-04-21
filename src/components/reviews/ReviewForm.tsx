@@ -102,7 +102,8 @@ export default function ReviewForm() {
                 key={i}
                 onClick={() => {
                   setRating(starNumber);
-                  if (errors.rating) setErrors({ ...errors, rating: undefined });
+                  if (errors.rating)
+                    setErrors({ ...errors, rating: undefined });
                 }}
                 onMouseEnter={() => setHoverRating(starNumber)}
                 onMouseLeave={() => setHoverRating(0)}

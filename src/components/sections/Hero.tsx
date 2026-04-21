@@ -41,7 +41,7 @@ export default function Hero() {
 
         <a
           href="tel:+78126605151"
-          className="inline-block bg-white hover:bg-white/90 text-bg-dark font-semibold px-6 sm:px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300"
+          className="inline-block bg-white text-bg-dark font-semibold px-6 sm:px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_40px_rgba(255,255,255,0.25)]"
         >
           <span className="sm:hidden">+7 (812) 660-51-51</span>
           <span className="hidden sm:inline">

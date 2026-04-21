@@ -23,9 +23,15 @@ export default function SectionAnchor({
     <AnimateOnScroll>
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-10 md:pb-14">
         <div className="flex items-center gap-3 md:gap-6 mb-10 md:mb-14">
-          <span className={`label tabular-nums whitespace-nowrap shrink-0 ${mutedColor}`}>{num}</span>
+          <span
+            className={`label tabular-nums whitespace-nowrap shrink-0 ${mutedColor}`}
+          >
+            {num}
+          </span>
           <span className={`flex-1 min-w-[16px] h-px ${lineColor}`} />
-          <span className={`italic-heading text-sm md:text-lg whitespace-nowrap shrink-0 text-right ${mutedColor}`}>
+          <span
+            className={`italic-heading text-sm md:text-lg whitespace-nowrap shrink-0 text-right ${mutedColor}`}
+          >
             {label}
           </span>
         </div>

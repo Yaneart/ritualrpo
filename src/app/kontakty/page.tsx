@@ -10,9 +10,23 @@ export const metadata: Metadata = {
 };
 
 const contacts = [
-  { num: "01", label: "Телефон", value: "+7 (812) 660-51-51", href: "tel:+78126605151" },
-  { num: "02", label: "Email", value: "info@ritualrpo.ru", href: "mailto:info@ritualrpo.ru" },
-  { num: "03", label: "Адрес", value: "г. Санкт-Петербург, ул. Примерная, д. 1" },
+  {
+    num: "01",
+    label: "Телефон",
+    value: "+7 (812) 660-51-51",
+    href: "tel:+78126605151",
+  },
+  {
+    num: "02",
+    label: "Email",
+    value: "info@ritualrpo.ru",
+    href: "mailto:info@ritualrpo.ru",
+  },
+  {
+    num: "03",
+    label: "Адрес",
+    value: "г. Санкт-Петербург, ул. Примерная, д. 1",
+  },
   { num: "04", label: "График", value: "Круглосуточно, без выходных" },
   { num: "05", label: "Выезд", value: "Специалист приедет в течение часа" },
 ];
@@ -35,8 +49,6 @@ export default function ContactPage() {
 
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 pb-28 md:pb-36">
           <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-16 items-start">
-
-            {/* Левая колонка — контакты */}
             <div className="md:col-span-5 md:sticky md:top-28">
               <AnimateOnScroll>
                 <a
@@ -56,7 +68,9 @@ export default function ContactPage() {
                         [ {item.num} ]
                       </span>
                       <div>
-                        <p className="label text-text-muted mb-1">{item.label}</p>
+                        <p className="label text-text-muted mb-1">
+                          {item.label}
+                        </p>
                         {item.href ? (
                           <a
                             href={item.href}
@@ -73,13 +87,12 @@ export default function ContactPage() {
                 </div>
 
                 <p className="text-text-muted leading-relaxed mt-10 max-w-xs">
-                  Позвоните или напишите — ответим сразу. Выезд специалиста
-                  по всему Санкт-Петербургу.
+                  Позвоните или напишите — ответим сразу. Выезд специалиста по
+                  всему Санкт-Петербургу.
                 </p>
               </AnimateOnScroll>
             </div>
 
-            {/* Правая колонка — форма */}
             <div className="md:col-span-7">
               <AnimateOnScroll>
                 <ContactForm />
@@ -89,7 +102,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Светлая секция внизу */}
       <section className="bg-bg border-t border-border">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-20 md:py-32 text-center">
           <AnimateOnScroll>

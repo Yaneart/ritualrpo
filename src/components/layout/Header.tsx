@@ -76,7 +76,7 @@ export default function Header() {
             <Link
               href={link.href}
               key={link.href}
-              className={`text-sm uppercase tracking-widest transition-colors duration-500 ${mutedColor} ${needsLight ? "hover:text-white" : "hover:text-accent"}`}
+              className={`relative text-sm uppercase tracking-widest transition-colors duration-500 ${mutedColor} ${needsLight ? "hover:text-white" : "hover:text-accent"} after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:transition-all after:duration-300 ${needsLight ? "after:bg-white" : "after:bg-text"}`}
             >
               {link.label}
             </Link>
