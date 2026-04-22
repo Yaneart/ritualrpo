@@ -10,7 +10,9 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Отзывы клиентов",
   description:
-    "Отзывы клиентов о работе RitualRPO — организация похорон, кремация и ритуальные услуги в Санкт-Петербурге.",
+    "Отзывы клиентов о ритуальных услугах RitualRPO в Санкт-Петербурге — организация похорон, кремация, памятники.",
+  alternates: { canonical: "https://ritualrpo.ru/otzyvy" },
+  openGraph: { url: "https://ritualrpo.ru/otzyvy" },
 };
 
 export default async function OtzyvyPage() {
@@ -18,6 +20,29 @@ export default async function OtzyvyPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Главная",
+                item: "https://ritualrpo.ru",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Отзывы",
+                item: "https://ritualrpo.ru/otzyvy",
+              },
+            ],
+          }),
+        }}
+      />
       <section className="bg-bg">
         <SectionAnchor
           num="00 / Отзывы"

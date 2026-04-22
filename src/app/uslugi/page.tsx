@@ -9,7 +9,9 @@ import CTA from "@/components/sections/CTA";
 export const metadata: Metadata = {
   title: "Услуги",
   description:
-    "Полный спектр ритуальных услуг: организация похорон, кремация, транспортировка, оформление документов. Работаем круглосуточно.",
+    "Ритуальные услуги в Санкт-Петербурге: организация похорон, кремация, ритуальные товары, памятники и благоустройство. Работаем круглосуточно, выезд в течение часа.",
+  alternates: { canonical: "https://ritualrpo.ru/uslugi" },
+  openGraph: { url: "https://ritualrpo.ru/uslugi" },
 };
 
 export default async function UslugiPage() {
@@ -17,6 +19,29 @@ export default async function UslugiPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Главная",
+                item: "https://ritualrpo.ru",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Услуги",
+                item: "https://ritualrpo.ru/uslugi",
+              },
+            ],
+          }),
+        }}
+      />
       <section className="bg-bg">
         <SectionAnchor
           num="01 / Услуги"
@@ -25,7 +50,7 @@ export default async function UslugiPage() {
             <>
               <span>Всё для достойного</span>{" "}
               <span className="italic-heading text-text-muted">прощания</span>
-              <span>.</span>
+              <span> в Санкт-Петербурге.</span>
             </>
           }
         />
@@ -46,7 +71,7 @@ export default async function UslugiPage() {
                     <div className="relative w-full aspect-[4/3] overflow-hidden border border-border">
                       <Image
                         src={service.image}
-                        alt={service.title}
+                        alt={`${service.title} в Санкт-Петербурге`}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"

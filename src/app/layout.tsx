@@ -25,13 +25,26 @@ export const metadata: Metadata = {
     template: "%s | RitualRPO",
   },
   description:
-    "Организация похорон, кремация, ритуальные товары в Санкт-Петербурге. Круглосуточная помощь, выезд в течение часа.",
+    "Ритуальные услуги в Санкт-Петербурге и Ленинградской области. Организация похорон, кремация, памятники. Круглосуточно, выезд в течение часа. Звоните: +7 (812) 660-51-51.",
   openGraph: {
     type: "website",
     locale: "ru_RU",
     siteName: "RitualRPO",
+    images: [
+      {
+        url: "/images/hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "RitualRPO — Ритуальные услуги в Санкт-Петербурге",
+      },
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -45,13 +58,22 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "FuneralHome",
               name: "RitualRPO",
+              url: "https://ritualrpo.ru",
               telephone: "+7-812-660-51-51",
               email: "info@ritualrpo.ru",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Санкт-Петербург",
+                addressRegion: "Санкт-Петербург",
                 addressCountry: "RU",
               },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 59.9343,
+                longitude: 30.3351,
+              },
+              areaServed: ["Санкт-Петербург", "Ленинградская область"],
+              priceRange: "$$",
               openingHoursSpecification: {
                 "@type": "OpeningHoursSpecification",
                 dayOfWeek: [

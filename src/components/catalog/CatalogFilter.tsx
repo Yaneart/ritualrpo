@@ -31,8 +31,10 @@ export default function CatalogFilter({
           label="— ритуальные товары"
           tagline={
             <>
-              <span>Ритуальные</span>{" "}
-              <span className="italic-heading text-text-muted">товары</span>
+              <span>Ритуальные товары</span>{" "}
+              <span className="italic-heading text-text-muted">
+                в Санкт-Петербурге
+              </span>
               <span>.</span>
             </>
           }

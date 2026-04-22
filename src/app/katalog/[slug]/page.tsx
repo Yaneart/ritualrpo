@@ -16,7 +16,14 @@ export async function generateMetadata({
     const product = await getProductBySlug(slug);
     return {
       title: product.name,
-      description: product.description ?? undefined,
+      description: product.description
+        ? `${product.description} Ритуальные товары в Санкт-Петербурге — RitualRPO.`
+        : `${product.name} — ритуальные товары в Санкт-Петербурге. Купить в RitualRPO.`,
+      alternates: { canonical: `https://ritualrpo.ru/katalog/${slug}` },
+      openGraph: {
+        url: `https://ritualrpo.ru/katalog/${slug}`,
+        images: [{ url: product.image, width: 1200, height: 630 }],
+      },
     };
   } catch {
     return {};
@@ -51,6 +58,54 @@ export default async function ProductPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Главная",
+                item: "https://ritualrpo.ru",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Каталог",
+                item: "https://ritualrpo.ru/katalog",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: product.name,
+                item: `https://ritualrpo.ru/katalog/${slug}`,
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            description: product.description ?? undefined,
+            image: `https://ritualrpo.ru${product.image}`,
+            offers: {
+              "@type": "Offer",
+              price: product.price,
+              priceCurrency: "RUB",
+              availability: "https://schema.org/InStock",
+              seller: { "@type": "Organization", name: "RitualRPO" },
+            },
+          }),
+        }}
+      />
       <section className="bg-bg pt-32 md:pt-40 pb-20 md:pb-32">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12">
           <AnimateOnScroll>
@@ -69,7 +124,7 @@ export default async function ProductPage({
                   <div className="relative aspect-square w-full max-w-[480px] overflow-hidden border border-border">
                     <Image
                       src={product.image}
-                      alt={product.name}
+                      alt={`${product.name} — ритуальные товары СПб`}
                       fill
                       priority
                       sizes="(max-width: 768px) 100vw, 480px"
@@ -131,7 +186,7 @@ export default async function ProductPage({
                     <div className="relative aspect-square overflow-hidden border border-border mb-5">
                       <Image
                         src={item.image}
-                        alt={item.name}
+                        alt={`${item.name} — ритуальные товары СПб`}
                         fill
                         sizes="(max-width: 768px) 100vw, 400px"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"

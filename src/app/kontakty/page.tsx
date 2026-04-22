@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   title: "Контакты",
   description:
     "Свяжитесь с нами: +7 (812) 660-51-51. Работаем круглосуточно. Выезд специалиста в течение часа по Санкт-Петербургу.",
+  alternates: { canonical: "https://ritualrpo.ru/kontakty" },
+  openGraph: { url: "https://ritualrpo.ru/kontakty" },
 };
 
 const contacts = [
@@ -34,6 +36,29 @@ const contacts = [
 export default function ContactPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Главная",
+                item: "https://ritualrpo.ru",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Контакты",
+                item: "https://ritualrpo.ru/kontakty",
+              },
+            ],
+          }),
+        }}
+      />
       <section className="bg-bg">
         <SectionAnchor
           num="00 / Контакты"

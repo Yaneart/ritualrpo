@@ -7,7 +7,10 @@ import Marker from "@/components/ui/Marker";
 
 export const metadata: Metadata = {
   title: "О компании",
-  description: "Более 10 лет опыта в сфере ритуальных услуг Санкт-Петербурга.",
+  description:
+    "RitualRPO — более 10 лет в сфере ритуальных услуг Санкт-Петербурга. Профессиональная и деликатная помощь круглосуточно.",
+  alternates: { canonical: "https://ritualrpo.ru/o-kompanii" },
+  openGraph: { url: "https://ritualrpo.ru/o-kompanii" },
 };
 
 export const revalidate = 60;
@@ -17,6 +20,29 @@ export default async function AboutPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Главная",
+                item: "https://ritualrpo.ru",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "О компании",
+                item: "https://ritualrpo.ru/o-kompanii",
+              },
+            ],
+          }),
+        }}
+      />
       <section className="bg-bg">
         <SectionAnchor
           num="01 / О компании"
@@ -55,7 +81,7 @@ export default async function AboutPage() {
                 <div className="relative w-full max-w-[420px] aspect-[4/5] overflow-hidden border border-border">
                   <Image
                     src="/images/about/office.png"
-                    alt="Офис RitualRPO"
+                    alt="Офис ритуальной службы RitualRPO в Санкт-Петербурге"
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 50vw"

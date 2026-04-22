@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import SectionAnchor from "@/components/ui/SectionAnchor";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import Marker from "@/components/ui/Marker";
+import { Service } from "@/types";
 
 export async function generateMetadata({
   params,
@@ -13,12 +14,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  let service;
   try {
-    service = await getServiceBySlug(slug);
+    const service = await getServiceBySlug(slug);
     return {
-      title: service.title,
-      description: service.description,
+      title: `${service.title} в Санкт-Петербурге`,
+      description: `${service.description} Работаем круглосуточно по Санкт-Петербургу и Ленинградской области.`,
+      alternates: { canonical: `https://ritualrpo.ru/uslugi/${slug}` },
+      openGraph: {
+        url: `https://ritualrpo.ru/uslugi/${slug}`,
+        images: [{ url: service.image, width: 1200, height: 630 }],
+      },
     };
   } catch {
     return {};
@@ -40,21 +45,72 @@ export default async function ServicePage({
 }) {
   const { slug } = await params;
   let service;
+  let otherServices: Service[] = [];
   try {
     service = await getServiceBySlug(slug);
+    const allServices = await getServices();
+    otherServices = allServices.filter((s) => s.slug !== slug);
   } catch {
     notFound();
   }
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Главная",
+                item: "https://ritualrpo.ru",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Услуги",
+                item: "https://ritualrpo.ru/uslugi",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: service.title,
+                item: `https://ritualrpo.ru/uslugi/${slug}`,
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: `${service.title} в Санкт-Петербурге`,
+            description: service.fullText,
+            url: `https://ritualrpo.ru/uslugi/${slug}`,
+            provider: {
+              "@type": "FuneralHome",
+              name: "RitualRPO",
+              url: "https://ritualrpo.ru",
+            },
+            areaServed: "Санкт-Петербург",
+            serviceType: service.title,
+          }),
+        }}
+      />
       <section
         id="hero"
         className="relative h-[50vh] md:h-[60vh] flex items-end overflow-hidden"
       >
         <Image
           src={service.image}
-          alt={service.title}
+          alt={`${service.title} — ритуальные услуги в Санкт-Петербурге`}
           fill
           priority
           sizes="100vw"
@@ -145,6 +201,32 @@ export default async function ServicePage({
           </AnimateOnScroll>
         </div>
       </section>
+      {otherServices.length > 0 && (
+        <section className="bg-bg border-t border-border">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-20 md:py-28">
+            <div className="mb-10 md:mb-14">
+              <Marker>Другие услуги</Marker>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {otherServices.map((s) => (
+                <Link
+                  key={s.id}
+                  href={`/uslugi/${s.slug}`}
+                  className="group block border border-border p-6 md:p-8 hover:border-text transition-colors duration-300"
+                >
+                  <h3 className="font-heading text-xl md:text-2xl leading-[1.1] tracking-[-0.01em] mb-3 group-hover:text-gold transition-colors duration-300">
+                    {s.title}
+                  </h3>
+                  <p className="text-text-muted text-sm leading-relaxed">
+                    {s.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }
