@@ -8,6 +8,7 @@ export interface Service {
   features: string[];
   price: string | null;
   order: number;
+  isActive?: boolean;
 }
 
 // Категория товаров
