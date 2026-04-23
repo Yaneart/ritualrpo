@@ -145,6 +145,15 @@ export default async function ServicePage({
                 <p className="text-lg md:text-xl leading-relaxed text-text-muted">
                   {service.fullText}
                 </p>
+
+                {service.price && (
+                  <div className="mt-10 pt-10 border-t border-border">
+                    <p className="label text-text-muted mb-2">Стоимость</p>
+                    <p className="font-heading text-[clamp(32px,4vw,56px)] leading-none tracking-[-0.02em] text-gold">
+                      {service.price}
+                    </p>
+                  </div>
+                )}
               </AnimateOnScroll>
             </div>
 
