@@ -29,6 +29,7 @@ export interface Product {
   image: string;
   categoryId: string;
   category?: Category;
+  isActive?: boolean;
 }
 
 // Данные для создания заявки

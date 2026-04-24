@@ -8,3 +8,6 @@ export const getProductsByCategory = (slug: string) =>
 
 export const getProductBySlug = (slug: string) =>
   fetchAPI<Product>(`products/slug/${slug}`);
+
+export const getProductById = (id: string) =>
+  fetchAPI<Product>(`products/${id}`);
