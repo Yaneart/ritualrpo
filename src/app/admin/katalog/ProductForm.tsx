@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { Category, Product } from "@/types";
+import ImageUploadInput from "@/components/admin/ImageUploadInput";
 import {
   createProductAction,
   updateProductAction,
@@ -115,13 +116,11 @@ export default function ProductForm({ product, categories }: Props) {
       </div>
 
       <div>
-        <label className={label}>Изображение (путь)</label>
-        <input
-          className={input}
+        <label className={label}>Изображение</label>
+        <ImageUploadInput
           value={image}
-          onChange={(e) => setImage(e.target.value)}
+          onChange={setImage}
           placeholder="/images/catalog/..."
-          required
         />
       </div>
 

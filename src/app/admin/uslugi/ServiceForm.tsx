@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { Service } from "@/types";
+import ImageUploadInput from "@/components/admin/ImageUploadInput";
 import {
   createServiceAction,
   updateServiceAction,
@@ -105,13 +106,11 @@ export default function ServiceForm({ service }: Props) {
       </div>
 
       <div>
-        <label className={label}>Изображение (путь)</label>
-        <input
-          className={input}
+        <label className={label}>Изображение</label>
+        <ImageUploadInput
           value={image}
-          onChange={(e) => setImage(e.target.value)}
+          onChange={setImage}
           placeholder="/images/services/..."
-          required
         />
       </div>
 
