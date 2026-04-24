@@ -1,4 +1,9 @@
-import { getProductBySlug, getProducts, getProductsByCategory } from "@/lib";
+import {
+  getProductBySlug,
+  getProducts,
+  getProductsByCategory,
+  getSettingsMap,
+} from "@/lib";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -50,11 +55,16 @@ export default async function ProductPage({
     notFound();
   }
 
-  const related = product.category?.slug
-    ? (await getProductsByCategory(product.category.slug))
-        .filter((item) => item.id !== product.id)
-        .slice(0, 3)
-    : [];
+  const [related, s] = await Promise.all([
+    product.category?.slug
+      ? getProductsByCategory(product.category.slug).then((items) =>
+          items.filter((item) => item.id !== product.id).slice(0, 3),
+        )
+      : Promise.resolve([]),
+    getSettingsMap(),
+  ]);
+  const phone = s.phone ?? "+7 (812) 660-51-51";
+  const phoneHref = s.phone_href ?? "tel:+78126605151";
 
   return (
     <>
@@ -161,10 +171,10 @@ export default async function ProductPage({
                 </div>
 
                 <a
-                  href="tel:+78126605151"
+                  href={phoneHref}
                   className="inline-block bg-text hover:bg-gold text-white hover:text-text px-8 py-5 rounded-full text-sm uppercase tracking-wider transition-colors duration-300"
                 >
-                  Заказать — +7 (812) 660-51-51
+                  Заказать — {phone}
                 </a>
               </AnimateOnScroll>
             </div>

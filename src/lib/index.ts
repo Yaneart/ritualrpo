@@ -14,3 +14,4 @@ export {
 } from "./api/calculator";
 export { getTeam, getStats } from "./api/about";
 export { getAdvantages } from "./api/advantages";
+export { getSettings, getSettingsMap } from "./api/settings";

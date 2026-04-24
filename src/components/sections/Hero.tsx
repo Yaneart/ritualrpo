@@ -1,4 +1,10 @@
-export default function Hero() {
+import { getSettingsMap } from "@/lib";
+
+export default async function Hero() {
+  const s = await getSettingsMap();
+  const phone = s.phone ?? "+7 (812) 660-51-51";
+  const phoneHref = s.phone_href ?? "tel:+78126605151";
+
   return (
     <section
       id="hero"
@@ -40,13 +46,11 @@ export default function Hero() {
         </p>
 
         <a
-          href="tel:+78126605151"
+          href={phoneHref}
           className="inline-block bg-white text-bg-dark font-semibold px-6 sm:px-8 py-4 rounded-full text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_40px_rgba(255,255,255,0.25)]"
         >
-          <span className="sm:hidden">+7 (812) 660-51-51</span>
-          <span className="hidden sm:inline">
-            Позвонить — +7 (812) 660-51-51
-          </span>
+          <span className="sm:hidden">{phone}</span>
+          <span className="hidden sm:inline">Позвонить — {phone}</span>
         </a>
       </div>
 

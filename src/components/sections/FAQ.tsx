@@ -1,4 +1,4 @@
-import { getFaqs } from "@/lib";
+import { getFaqs, getSettingsMap } from "@/lib";
 import SectionAnchor from "../ui/SectionAnchor";
 import Marker from "../ui/Marker";
 import AnimateOnScroll from "../ui/AnimateOnScroll";
@@ -7,7 +7,9 @@ import FAQAccordion from "../faq/FAQAccordion";
 export const revalidate = 60;
 
 export default async function FAQ() {
-  const faqs = await getFaqs();
+  const [faqs, s] = await Promise.all([getFaqs(), getSettingsMap()]);
+  const phone = s.phone ?? "+7 (812) 660-51-51";
+  const phoneHref = s.phone_href ?? "tel:+78126605151";
   if (faqs.length === 0) return null;
 
   return (
@@ -55,10 +57,10 @@ export default async function FAQ() {
                 позвоните, приедем или ответим тут же.
               </p>
               <a
-                href="tel:+78126605151"
+                href={phoneHref}
                 className="inline-flex items-center gap-3 font-heading italic-heading text-3xl text-white hover:text-gold transition-colors duration-300"
               >
-                +7 (812) 660-51-51
+                {phone}
               </a>
             </AnimateOnScroll>
           </div>

@@ -1,39 +1,24 @@
 import ContactForm from "@/components/contacts/ContactForm";
 import SectionAnchor from "@/components/ui/SectionAnchor";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
-import { Metadata } from "next";
+import { getSettingsMap } from "@/lib";
 
-export const metadata: Metadata = {
-  title: "Контакты",
-  description:
-    "Свяжитесь с нами: +7 (812) 660-51-51. Работаем круглосуточно. Выезд специалиста в течение часа по Санкт-Петербургу.",
-  alternates: { canonical: "https://ritualrpo.ru/kontakty" },
-  openGraph: { url: "https://ritualrpo.ru/kontakty" },
-};
+export default async function ContactPage() {
+  const s = await getSettingsMap();
+  const phone = s.phone ?? "+7 (812) 660-51-51";
+  const phoneHref = s.phone_href ?? "tel:+78126605151";
+  const email = s.email ?? "info@ritualrpo.ru";
+  const address = s.address ?? "г. Санкт-Петербург, ул. Примерная, д. 1";
+  const hours = s.hours ?? "Круглосуточно, без выходных";
 
-const contacts = [
-  {
-    num: "01",
-    label: "Телефон",
-    value: "+7 (812) 660-51-51",
-    href: "tel:+78126605151",
-  },
-  {
-    num: "02",
-    label: "Email",
-    value: "info@ritualrpo.ru",
-    href: "mailto:info@ritualrpo.ru",
-  },
-  {
-    num: "03",
-    label: "Адрес",
-    value: "г. Санкт-Петербург, ул. Примерная, д. 1",
-  },
-  { num: "04", label: "График", value: "Круглосуточно, без выходных" },
-  { num: "05", label: "Выезд", value: "Специалист приедет в течение часа" },
-];
+  const contacts = [
+    { num: "01", label: "Телефон", value: phone, href: phoneHref },
+    { num: "02", label: "Email", value: email, href: `mailto:${email}` },
+    { num: "03", label: "Адрес", value: address },
+    { num: "04", label: "График", value: hours },
+    { num: "05", label: "Выезд", value: "Специалист приедет в течение часа" },
+  ];
 
-export default function ContactPage() {
   return (
     <>
       <script
@@ -77,10 +62,10 @@ export default function ContactPage() {
             <div className="md:col-span-5 md:sticky md:top-28">
               <AnimateOnScroll>
                 <a
-                  href="tel:+78126605151"
+                  href={phoneHref}
                   className="block font-heading text-[clamp(28px,3.2vw,48px)] leading-[1.0] tracking-[-0.02em] text-text hover:text-gold transition-colors duration-300 mb-6 md:mb-8 whitespace-nowrap"
                 >
-                  +7 (812) 660-51-51
+                  {phone}
                 </a>
 
                 <div className="border-t border-border">

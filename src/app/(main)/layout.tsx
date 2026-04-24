@@ -3,12 +3,18 @@ import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import FloatingMessenger from "@/components/ui/FloatingMessenger";
 import FloatingMaxMessenger from "@/components/ui/FloatingMaxMessenger";
+import { getSettingsMap } from "@/lib";
 
-export default function MainLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const s = await getSettingsMap();
+  const phone = s.phone ?? "+7 (812) 660-51-51";
+  const phoneHref = s.phone_href ?? "tel:+78126605151";
+  const email = s.email ?? "info@ritualrpo.ru";
+
   return (
     <>
       <script
@@ -19,8 +25,13 @@ export default function MainLayout({
             "@type": "FuneralHome",
             name: "RitualRPO",
             url: "https://ritualrpo.ru",
-            telephone: "+7-812-660-51-51",
-            email: "info@ritualrpo.ru",
+            telephone: phoneHref
+              .replace("tel:", "")
+              .replace(
+                /(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/,
+                "+$1-$2-$3-$4-$5",
+              ),
+            email: email,
             address: {
               "@type": "PostalAddress",
               addressLocality: "Санкт-Петербург",
@@ -51,7 +62,7 @@ export default function MainLayout({
           }),
         }}
       />
-      <Header />
+      <Header phone={phone} phoneHref={phoneHref} />
       <main className="flex-1">{children}</main>
       <Footer />
       <ScrollToTop />

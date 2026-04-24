@@ -126,6 +126,14 @@ export interface TeamMember {
   order: number;
 }
 
+// Настройки сайта
+export interface SiteSetting {
+  id: string;
+  key: string;
+  value: string;
+  updatedAt: string;
+}
+
 // Преимущество (секция "Почему мы")
 export interface Advantage {
   id: string;

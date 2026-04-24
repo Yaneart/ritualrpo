@@ -12,7 +12,12 @@ const navLinks = [
   { href: "/kontakty", label: "Контакты" },
 ];
 
-export default function Header() {
+interface Props {
+  phone: string;
+  phoneHref: string;
+}
+
+export default function Header({ phone, phoneHref }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
@@ -84,10 +89,10 @@ export default function Header() {
         </nav>
 
         <a
-          href="tel:+78126605151"
+          href={phoneHref}
           className={`hidden md:flex items-center gap-2 border ${borderColor} ${accentColor} hover:bg-accent hover:text-white px-5 py-2.5 rounded-full text-sm uppercase tracking-wider transition-all duration-500`}
         >
-          +7 (812) 660-51-51
+          {phone}
         </a>
 
         <button
@@ -128,10 +133,10 @@ export default function Header() {
             </Link>
           ))}
           <a
-            href="tel:+78126605151"
+            href={phoneHref}
             className={`border ${borderColor} ${accentColor} hover:bg-accent hover:text-white px-5 py-2.5 rounded-full text-center text-sm uppercase tracking-wider transition-all duration-300`}
           >
-            +7 (812) 660-51-51
+            {phone}
           </a>
         </nav>
       )}

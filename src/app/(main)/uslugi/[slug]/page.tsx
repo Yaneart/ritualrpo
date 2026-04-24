@@ -1,4 +1,4 @@
-import { getServiceBySlug, getServices } from "@/lib";
+import { getServiceBySlug, getServices, getSettingsMap } from "@/lib";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,6 +53,9 @@ export default async function ServicePage({
   } catch {
     notFound();
   }
+  const s = await getSettingsMap();
+  const phone = s.phone ?? "+7 (812) 660-51-51";
+  const phoneHref = s.phone_href ?? "tel:+78126605151";
 
   return (
     <>
@@ -202,10 +205,10 @@ export default async function ServicePage({
             </p>
 
             <a
-              href="tel:+78126605151"
+              href={phoneHref}
               className="inline-block bg-text hover:bg-gold text-white hover:text-text px-8 py-5 rounded-full text-sm uppercase tracking-wider transition-colors duration-300"
             >
-              Позвонить — +7 (812) 660-51-51
+              Позвонить — {phone}
             </a>
           </AnimateOnScroll>
         </div>

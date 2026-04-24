@@ -1,10 +1,19 @@
+import { getSettingsMap } from "@/lib";
+
 const socialLinks = [
   { href: "#", label: "VK" },
   { href: "#", label: "Telegram" },
   { href: "#", label: "WhatsApp" },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const s = await getSettingsMap();
+  const phone = s.phone ?? "+7 (812) 660-51-51";
+  const phoneHref = s.phone_href ?? "tel:+78126605151";
+  const email = s.email ?? "info@ritualrpo.ru";
+  const address = s.address ?? "г. Санкт-Петербург";
+  const hours = s.hours ?? "Круглосуточно, без выходных";
+
   return (
     <footer className="bg-bg-dark text-bg md:min-h-screen flex flex-col justify-between">
       <div className="max-w-7xl mx-auto w-full px-6 pt-20 md:pt-55">
@@ -15,18 +24,18 @@ export default function Footer() {
             </h3>
             <div className="flex flex-col gap-4 text-base text-bg/60">
               <a
-                href="tel:+78126605151"
+                href={phoneHref}
                 className="hover:text-bg transition-colors duration-300"
               >
-                +7 (812) 660-51-51
+                {phone}
               </a>
               <a
-                href="mailto:info@ritualrpo.ru"
+                href={`mailto:${email}`}
                 className="hover:text-bg transition-colors duration-300"
               >
-                info@ritualrpo.ru
+                {email}
               </a>
-              <p>Круглосуточно, без выходных</p>
+              <p>{hours}</p>
             </div>
           </div>
 
@@ -35,8 +44,9 @@ export default function Footer() {
               Адрес
             </h3>
             <div className="flex flex-col gap-4 text-base text-bg/60">
-              <p>г. Санкт-Петербург</p>
-              <p>ул. Примерная, д. 1</p>
+              {address.split(", ").map((line, i) => (
+                <p key={i}>{line}</p>
+              ))}
             </div>
           </div>
 
