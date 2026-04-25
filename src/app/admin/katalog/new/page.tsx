@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getCategories } from "@/lib/api/categories";
 import ProductForm from "../ProductForm";
 
+export const dynamic = "force-dynamic";
+
 export default async function NewProductPage() {
   const categories = await getCategories();
 

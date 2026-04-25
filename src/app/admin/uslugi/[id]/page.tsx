@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getServiceById } from "@/lib/api/services";
 import ServiceForm from "../ServiceForm";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ id: string }>;
 }

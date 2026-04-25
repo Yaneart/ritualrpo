@@ -3,6 +3,8 @@ import SectionAnchor from "@/components/ui/SectionAnchor";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import { getSettingsMap } from "@/lib";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ContactPage() {
   const s = await getSettingsMap();
   const phone = s.phone ?? "+7 (812) 660-51-51";

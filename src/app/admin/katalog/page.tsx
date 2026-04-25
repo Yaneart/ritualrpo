@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getProducts } from "@/lib/api/products";
 import DeleteProductButton from "./DeleteProductButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminKatalogPage() {
   const products = await getProducts();
   const sorted = [...products].sort((a, b) => a.name.localeCompare(b.name));

@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getFaqs } from "@/lib/api/faq";
 import FaqForm from "../FaqForm";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ id: string }>;
 }

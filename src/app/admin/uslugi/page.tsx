@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getServices } from "@/lib/api/services";
 import DeleteServiceButton from "./DeleteServiceButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminUslugiPage() {
   const services = await getServices();
   const sorted = [...services].sort((a, b) => a.order - b.order);

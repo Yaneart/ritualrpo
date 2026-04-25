@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getFaqs } from "@/lib/api/faq";
 import DeleteFaqButton from "./DeleteFaqButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminFaqPage() {
   const faqs = await getFaqs();
   const sorted = [...faqs].sort((a, b) => a.order - b.order);

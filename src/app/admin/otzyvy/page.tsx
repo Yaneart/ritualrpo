@@ -4,6 +4,8 @@ import { getAdminReviews } from "@/lib/api/reviews";
 import ApproveButton from "./ApproveButton";
 import DeleteReviewButton from "./DeleteReviewButton";
 
+export const dynamic = "force-dynamic";
+
 const STARS = ["★", "★★", "★★★", "★★★★", "★★★★★"];
 
 export default async function AdminOtzyvyPage() {

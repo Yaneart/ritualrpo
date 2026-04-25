@@ -6,6 +6,8 @@ import SectionAnchor from "@/components/ui/SectionAnchor";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import CTA from "@/components/sections/CTA";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Услуги",
   description:

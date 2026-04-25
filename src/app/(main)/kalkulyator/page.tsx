@@ -2,6 +2,8 @@ import CalculatorClient from "@/components/calculator/CalculatorClient";
 import { getCalculatorGroups, getCalculatorServiceTypes } from "@/lib";
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Калькулятор",
   description:
@@ -10,7 +12,6 @@ export const metadata: Metadata = {
   openGraph: { url: "https://ritualrpo.ru/kalkulyator" },
 };
 
-export const revalidate = 60;
 
 export default async function CalculatorPage() {
   const [serviceTypes, groups] = await Promise.all([

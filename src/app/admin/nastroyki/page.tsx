@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getSettings } from "@/lib/api/settings";
 import SettingsForm from "./SettingsForm";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminNastroyкiPage() {
   const store = await cookies();
   const token = store.get("admin_token")?.value;

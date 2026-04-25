@@ -2,6 +2,8 @@ import CatalogFilter from "@/components/catalog/CatalogFilter";
 import { getCategories, getProducts } from "@/lib";
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Каталог",
   description:

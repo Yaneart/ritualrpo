@@ -36,10 +36,12 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const products = await getProducts();
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
+  try {
+    const products = await getProducts();
+    return products.map((product) => ({ slug: product.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function ProductPage({

@@ -17,20 +17,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }));
 
-  const [services, products] = await Promise.all([
-    getServices(),
-    getProducts(),
-  ]);
+  let servicePages: MetadataRoute.Sitemap = [];
+  let productPages: MetadataRoute.Sitemap = [];
 
-  const servicePages = services.map((service) => ({
-    url: `${baseUrl}/uslugi/${service.slug}`,
-    lastModified: new Date(),
-  }));
-
-  const productPages = products.map((product) => ({
-    url: `${baseUrl}/katalog/${product.slug}`,
-    lastModified: new Date(),
-  }));
+  try {
+    const [services, products] = await Promise.all([
+      getServices(),
+      getProducts(),
+    ]);
+    servicePages = services.map((service) => ({
+      url: `${baseUrl}/uslugi/${service.slug}`,
+      lastModified: new Date(),
+    }));
+    productPages = products.map((product) => ({
+      url: `${baseUrl}/katalog/${product.slug}`,
+      lastModified: new Date(),
+    }));
+  } catch {
+    // бэкенд недоступен при сборке — возвращаем только статические страницы
+  }
 
   return [...staticPages, ...servicePages, ...productPages];
 }

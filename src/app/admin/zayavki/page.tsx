@@ -4,6 +4,8 @@ import { getRequests } from "@/lib/api/requests";
 import MarkAsReadButton from "./MarkAsReadButton";
 import DeleteRequestButton from "./DeleteRequestButton";
 
+export const dynamic = "force-dynamic";
+
 const TYPE_LABELS: Record<string, string> = {
   contact: "Контакты",
   calculator: "Калькулятор",

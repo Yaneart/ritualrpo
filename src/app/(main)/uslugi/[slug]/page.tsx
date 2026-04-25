@@ -31,11 +31,12 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const services = await getServices();
-
-  return services.map((service) => ({
-    slug: service.slug,
-  }));
+  try {
+    const services = await getServices();
+    return services.map((service) => ({ slug: service.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function ServicePage({

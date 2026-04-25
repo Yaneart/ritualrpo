@@ -4,6 +4,8 @@ import { getProductById } from "@/lib/api/products";
 import { getCategories } from "@/lib/api/categories";
 import ProductForm from "../ProductForm";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ id: string }>;
 }

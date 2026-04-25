@@ -5,7 +5,7 @@ import SectionAnchor from "@/components/ui/SectionAnchor";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import Marker from "@/components/ui/Marker";
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Отзывы клиентов",

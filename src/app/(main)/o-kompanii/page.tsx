@@ -5,6 +5,8 @@ import SectionAnchor from "@/components/ui/SectionAnchor";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import Marker from "@/components/ui/Marker";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "О компании",
   description:
@@ -12,8 +14,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://ritualrpo.ru/o-kompanii" },
   openGraph: { url: "https://ritualrpo.ru/o-kompanii" },
 };
-
-export const revalidate = 60;
 
 export default async function AboutPage() {
   const [team, stats] = await Promise.all([getTeam(), getStats()]);

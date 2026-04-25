@@ -6,6 +6,8 @@ import Testimonials from "@/components/sections/Testimonials";
 import WhyUs from "@/components/sections/WhyUs";
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   alternates: { canonical: "https://ritualrpo.ru" },
   openGraph: { url: "https://ritualrpo.ru" },

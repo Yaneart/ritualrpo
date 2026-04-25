@@ -1,17 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter, Cormorant_Garamond } from "next/font/google";
-
-const inter = Inter({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "600", "700"],
-  variable: "--font-heading",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ritualrpo.ru"),
@@ -44,7 +32,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="ru">
       <body className="min-h-screen flex flex-col font-sans antialiased bg-bg text-text">
         {children}
       </body>
